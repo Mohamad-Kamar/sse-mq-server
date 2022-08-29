@@ -4,6 +4,10 @@ import { UpdateQueueDto } from './dto/update-queue.dto';
 
 @Injectable()
 export class QueueService {
+  hasQueue(queueId: number) {
+    return true;
+  }
+
   create(createQueueDto: CreateQueueDto) {
     return 'This action adds a new queue';
   }

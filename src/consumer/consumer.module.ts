@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConsumerService } from './consumer.service';
 import { ConsumerController } from './consumer.controller';
+import { QueueModule } from '../queue/queue.module';
 
 @Module({
+  imports: [QueueModule],
   controllers: [ConsumerController],
-  providers: [ConsumerService]
+  providers: [ConsumerService],
 })
 export class ConsumerModule {}

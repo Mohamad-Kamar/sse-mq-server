@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { DatabaseService } from 'src/database/database.service';
 import { ConsumerService } from './consumer.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
@@ -6,6 +15,11 @@ import { UpdateConsumerDto } from './dto/update-consumer.dto';
 @Controller('consumer')
 export class ConsumerController {
   constructor(private readonly consumerService: ConsumerService) {}
+
+  @Get()
+  connect() {
+    return this.consumerService.connect({ queueId: 1234 });
+  }
 
   @Post()
   create(@Body() createConsumerDto: CreateConsumerDto) {
@@ -23,7 +37,10 @@ export class ConsumerController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateConsumerDto: UpdateConsumerDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateConsumerDto: UpdateConsumerDto,
+  ) {
     return this.consumerService.update(+id, updateConsumerDto);
   }
 
