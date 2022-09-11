@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { UpdateQueueDto } from './dto/update-queue.dto';
-import { ConnectionParams } from 'src/globalTypes/connectionParams';
 import { CreateQueueDto } from './dto/create-queue.dto';
 @Injectable()
 export class QueueService {
@@ -11,19 +10,17 @@ export class QueueService {
     return this.databaseService.getQueue(queueName);
   }
 
-  createQueue(connectionParams: ConnectionParams) {
-    if (!connectionParams.hasOwnProperty('queueType'))
-      connectionParams.queueType = 'fanout';
-    return this.databaseService.addQueue(connectionParams);
+  createQueue(createQueueDto: CreateQueueDto) {
+    if (!createQueueDto.hasOwnProperty('queueType'))
+      createQueueDto.queueType = 'fanout';
+    console.log('CREATED QUEUE', createQueueDto);
+    return this.databaseService.addQueue(createQueueDto);
   }
 
   connect(queueName: string) {
     return this.databaseService.getQueue(queueName);
   }
 
-  create(createQueueDto: CreateQueueDto) {
-    return 'This action adds a new queue';
-  }
   findAll() {
     return `This action returns all queue`;
   }

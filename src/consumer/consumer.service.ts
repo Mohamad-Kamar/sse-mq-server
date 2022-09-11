@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { QueueService } from '../queue/queue.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
-import { ConnectionParams } from 'src/globalTypes/connectionParams';
 import { Observable } from 'rxjs';
+import { CreateQueueDto } from '../queue/dto/create-queue.dto';
 
 @Injectable()
 export class ConsumerService {
   constructor(private readonly queueService: QueueService) {}
 
-  connect(connectionParms: ConnectionParams): Observable<MessageEvent> {
-    const { queueName }: ConnectionParams = connectionParms;
+  connect(connectionParms: CreateQueueDto): Observable<MessageEvent> {
+    const { queueName }: CreateQueueDto = connectionParms;
     const assocQueue = this.queueService.getQueue(queueName);
     if (!assocQueue) {
       return this.queueService.createQueue(connectionParms).assocObs;

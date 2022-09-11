@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConnectionParams } from 'src/globalTypes/connectionParams';
 import { DBConnectionParams } from 'src/globalTypes/dbConnectionParams';
+import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
 import { CreateDatabaseDto } from './dto/create-database.dto';
 import { UpdateDatabaseDto } from './dto/update-database.dto';
 
@@ -17,15 +18,16 @@ export class DatabaseService {
     return found;
   }
 
-  addQueue(connectionParams: ConnectionParams): DBConnectionParams {
+  addQueue(createQueueDto: CreateQueueDto): DBConnectionParams {
     const messageToSend = new MessageEvent('message');
     const addedQueue: DBConnectionParams = {
-      connectionParams,
+      connectionParams: createQueueDto,
       assocObs: new BehaviorSubject(messageToSend),
     };
     this.connections.push(addedQueue);
     return addedQueue;
   }
+
   create(createDatabaseDto: CreateDatabaseDto) {
     return 'This action adds a new database';
   }

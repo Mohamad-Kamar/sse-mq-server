@@ -20,11 +20,6 @@ export class ProducerController {
     return this.producerService.publish(messageBody);
   }
 
-  @Post()
-  create(@Body() createProducerDto: CreateProducerDto) {
-    return this.producerService.create(createProducerDto);
-  }
-
   @Get()
   findAll() {
     return this.producerService.findAll();

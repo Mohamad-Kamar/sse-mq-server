@@ -7,12 +7,12 @@ import {
   Param,
   Delete,
   Sse,
+  Query,
 } from '@nestjs/common';
 import { MessageEvent } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ConnectionParams } from 'src/globalTypes/connectionParams';
+import { CreateQueueDto } from '../queue/dto/create-queue.dto';
 import { ConsumerService } from './consumer.service';
-import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
 
 @Controller('consumer')
@@ -20,15 +20,13 @@ export class ConsumerController {
   constructor(private readonly consumerService: ConsumerService) {}
 
   @Sse('connect')
-  connect(): Observable<MessageEvent> {
-    const queueName = 'hello';
-    const fakeParams: ConnectionParams = { queueName };
-    return this.consumerService.connect(fakeParams);
+  connect(@Query() query: CreateQueueDto): Observable<MessageEvent> {
+    return this.consumerService.connect(query);
   }
 
   @Get('healthcheck')
   healthcheck() {
-    return 'Good';
+    return 200;
   }
 
   @Post('create')
