@@ -1,3 +1,4 @@
 export type ConnectionParams = {
-  queueId?: number;
+  queueName: string;
+  queueType?: string;
 };
