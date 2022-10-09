@@ -5,6 +5,10 @@
   "author": "Mohamad Kamar",
   "private": false,
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mohamad-Kamar/sse-mq-server.git"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
