@@ -1,9 +1,9 @@
 {
-  "name": "ogmq",
+  "name": "@mkamar/mq-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
+  "description": "A Messaging Queue that uses native server sent events",
+  "author": "Mohamad Kamar",
+  "private": false,
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
