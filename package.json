@@ -1,13 +1,13 @@
 {
   "name": "@mkamar/mq-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Messaging Queue that uses native server sent events",
   "author": "Mohamad Kamar",
   "private": false,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mohamad-Kamar/sse-mq-server.git"
+    "url": "git+https://github.com/Mohamad-Kamar/sse-mq-server.git"
   },
   "scripts": {
     "prebuild": "rimraf dist",
