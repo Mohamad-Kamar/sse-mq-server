@@ -1,4 +1,4 @@
 export type ConnectionParams = {
-  queueName: string;
+  queueKey: string;
   queueType?: string;
 };

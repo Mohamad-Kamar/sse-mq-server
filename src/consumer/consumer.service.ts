@@ -10,8 +10,8 @@ export class ConsumerService {
   constructor(private readonly queueService: QueueService) {}
 
   connect(connectionParms: CreateQueueDto): Observable<MessageEvent> {
-    const { queueName }: CreateQueueDto = connectionParms;
-    const assocQueue = this.queueService.getQueue(queueName);
+    const { queueKey }: CreateQueueDto = connectionParms;
+    const assocQueue = this.queueService.getQueue(queueKey);
     if (!assocQueue) {
       return this.queueService.createQueue(connectionParms).assocObs;
     }

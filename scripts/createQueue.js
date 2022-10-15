@@ -1,7 +1,7 @@
-let queueName = 'testQueueBrowser';
+let queueKey = 'testQueueBrowser';
 let queueType = 'fanout';
 
-let createObj = JSON.stringify({ queueName, queueType });
+let createObj = JSON.stringify({ queueKey, queueType });
 let r = fetch('http://localhost:3000/queue', {
   method: 'POST',
   body: createObj,

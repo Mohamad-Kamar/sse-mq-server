@@ -6,8 +6,8 @@ import { CreateQueueDto } from './dto/create-queue.dto';
 export class QueueService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  getQueue(queueName: string) {
-    return this.databaseService.getQueue(queueName);
+  getQueue(queueKey: string) {
+    return this.databaseService.getQueue(queueKey);
   }
 
   createQueue(createQueueDto: CreateQueueDto) {
@@ -17,8 +17,8 @@ export class QueueService {
     return this.databaseService.addQueue(createQueueDto);
   }
 
-  connect(queueName: string) {
-    return this.databaseService.getQueue(queueName);
+  connect(queueKey: string) {
+    return this.databaseService.getQueue(queueKey);
   }
 
   findAll() {

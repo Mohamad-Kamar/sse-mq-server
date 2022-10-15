@@ -10,10 +10,10 @@ import { UpdateDatabaseDto } from './dto/update-database.dto';
 export class DatabaseService {
   connections: DBConnectionParams[] = [];
 
-  getQueue(queueName: string): DBConnectionParams {
+  getQueue(queueKey: string): DBConnectionParams {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const found: DBConnectionParams = this.connections.find(
-      (queue) => queue.connectionParams.queueName === queueName,
+      (queue) => queue.connectionParams.queueKey === queueKey,
     )!;
     return found;
   }

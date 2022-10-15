@@ -1,4 +1,4 @@
 export class CreateQueueDto {
-  queueName = '';
+  queueKey = '';
   queueType = 'fanout';
 }

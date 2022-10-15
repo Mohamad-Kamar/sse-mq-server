@@ -1,4 +1,4 @@
 export type PublisherMessage = {
-  queueName: string;
+  queueKey: string;
   message: string;
 };

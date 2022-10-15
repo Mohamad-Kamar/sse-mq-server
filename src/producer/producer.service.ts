@@ -3,14 +3,14 @@ import { PublisherMessage } from 'src/globalTypes/publisherMessage';
 import { QueueService } from '../queue/queue.service';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
-import { connect } from 'rxjs';
+
 @Injectable()
 export class ProducerService {
   constructor(private readonly queueService: QueueService) {}
 
   publish(publisherMessage: any) {
-    const { queueName, message }: PublisherMessage = publisherMessage;
-    let assocQueue = this.queueService.getQueue(queueName);
+    const { queueKey, message }: PublisherMessage = publisherMessage;
+    let assocQueue = this.queueService.getQueue(queueKey);
     if (!assocQueue) {
       assocQueue = this.queueService.createQueue(publisherMessage);
     }
