@@ -1,13 +1,7 @@
 import { FanoutQueue } from './FanoutQueue';
 import { DirectQueue } from './DirectQueue';
 import { RoundRobinQueue } from './RoundRobinQueue';
-import { IQueue } from './IQueue';
-
-interface Constructable<T> {
-  new (...args: any): T;
-}
-
-export type QueueConstructableClass = Constructable<IQueue>;
+import { QueueConstructableClass } from 'src/Types';
 
 export enum QueueEnums {
   FANOUT = 'fanout',
