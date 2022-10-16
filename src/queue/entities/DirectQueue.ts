@@ -3,7 +3,7 @@ import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
 import { IQueue } from './IQueue';
 import { Consumer, Consumers } from 'src/Types';
 import { v4 as uuidv4 } from 'uuid';
-import { ConsumerNotFoundError } from '../Errors/ConsumerNotFoundError';
+import { ConsumerNotFoundError } from '../../structures/Errors/ConsumerNotFoundError';
 
 export class DirectQueue implements IQueue {
   consumers: Consumers;
