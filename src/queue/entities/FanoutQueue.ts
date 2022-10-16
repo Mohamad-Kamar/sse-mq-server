@@ -12,7 +12,7 @@ export class FanoutQueue implements IQueue {
     this.consumers = {};
   }
 
-  addConsumer(): Consumer {
+  addConsumer(): string {
     const messageToSend = new MessageEvent('message');
     const addedSubject = new BehaviorSubject(messageToSend);
     const consumerID = uuidv4();
@@ -21,7 +21,11 @@ export class FanoutQueue implements IQueue {
       consumerID,
     };
     this.consumers[consumerID] = addedConsumer;
-    return addedConsumer;
+    return consumerID;
+  }
+
+  getConsumer(consumerID: string): Consumer {
+    return this.consumers[consumerID];
   }
 
   publish(message: string) {

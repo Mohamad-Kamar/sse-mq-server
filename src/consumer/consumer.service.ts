@@ -3,30 +3,35 @@ import { Observable } from 'rxjs';
 import { QueueService } from '../queue/queue.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
-import { CreateQueueDto } from '../queue/dto/create-queue.dto';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
+import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
+import { InvalidConsumerError } from '../structures/Errors/InvalidConsumerError';
 
 @Injectable()
 export class ConsumerService {
   constructor(private readonly queueService: QueueService) {}
 
-  connect(connectionParms: CreateQueueDto): Observable<MessageEvent> {
-    if (!connectionParms.hasOwnProperty('queueType'))
-      throw new InvalidQueueError('Queue Type Missing');
-    if (!connectionParms.hasOwnProperty('queueKey'))
-      throw new InvalidQueueError('Queue Key Missing');
+  connect(connectToQueueDto: ConnectToQueueDto): Observable<MessageEvent> {
+    const { queueKey, consumerID } = connectToQueueDto;
+    if (!queueKey) throw new InvalidQueueError('Queue Key Missing');
+    if (!consumerID) throw new InvalidConsumerError('ConsumerID Missing');
 
-    const { queueKey }: CreateQueueDto = connectionParms;
+    const targetQueue = this.queueService.getQueue(queueKey);
+    const targetConsumer = targetQueue.queue.getConsumer(consumerID);
+    return targetConsumer.consumer;
+  }
+
+  create(createConsumerDto: CreateConsumerDto): string {
+    const { queueKey }: CreateConsumerDto = createConsumerDto;
+    if (!queueKey) throw new InvalidQueueError('Queue Key Missing');
+
     const assocQueue = this.queueService.getQueue(queueKey);
     if (!assocQueue) {
       throw new QueueNotFoundError();
     }
-    return assocQueue.queue.addConsumer().consumer;
-  }
-
-  create(createConsumerDto: CreateConsumerDto) {
-    return 'This action adds a new consumer';
+    const targetConsumerID = assocQueue.queue.addConsumer();
+    return targetConsumerID;
   }
 
   findAll() {

@@ -1,1 +1,3 @@
-export class CreateConsumerDto {}
+export class CreateConsumerDto {
+  queueKey: string;
+}

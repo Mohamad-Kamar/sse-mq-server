@@ -15,7 +15,7 @@ export class RoundRobinQueue implements IQueue {
     this.currentIndex = 0;
   }
 
-  addConsumer(): Consumer {
+  addConsumer(): string {
     const messageToSend = new MessageEvent('message');
     const addedSubject = new BehaviorSubject(messageToSend);
     const consumerID = uuidv4();
@@ -24,8 +24,13 @@ export class RoundRobinQueue implements IQueue {
       consumerID,
     };
     this.consumers[consumerID] = addedConsumer;
-    return addedConsumer;
+    return consumerID;
   }
+
+  getConsumer(consumerID: string): Consumer {
+    return this.consumers[consumerID];
+  }
+
   publish(message: string) {
     const currentKeys = Object.keys(this.consumers);
     this.currentIndex = this.currentIndex % currentKeys.length;
