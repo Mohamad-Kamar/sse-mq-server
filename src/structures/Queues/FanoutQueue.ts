@@ -18,7 +18,7 @@ export class FanoutQueue implements IQueue {
     const addedID = uuidv4();
     const addedConsumer: Consumer = {
       subject: addedSubject,
-      id: addedID,
+      consumerID: addedID,
     };
     this.consumers[addedID] = addedConsumer;
     return addedConsumer;

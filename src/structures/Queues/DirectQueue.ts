@@ -20,7 +20,7 @@ export class DirectQueue implements IQueue {
     const addedID = uuidv4();
     const addedConsumer: Consumer = {
       subject: addedSubject,
-      id: addedID,
+      consumerID: addedID,
     };
     this.consumers[addedID] = addedConsumer;
     this.currentID ? (this.currentID = addedID) : null;

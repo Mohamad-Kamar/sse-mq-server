@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export type Consumer = {
   subject: BehaviorSubject<MessageEvent>;
-  id: string;
+  consumerID: string;
 };
 
 export type Consumers = {
