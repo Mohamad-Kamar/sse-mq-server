@@ -22,7 +22,7 @@ export class ConsumerService {
     if (!assocQueue) {
       throw new QueueNotFoundError();
     }
-    return assocQueue.queue.addConsumer().subject;
+    return assocQueue.queue.addConsumer().consumer;
   }
 
   create(createConsumerDto: CreateConsumerDto) {

@@ -17,18 +17,19 @@ export class DirectQueue implements IQueue {
   addConsumer(): Consumer {
     const messageToSend = new MessageEvent('message');
     const addedSubject = new BehaviorSubject(messageToSend);
-    const addedID = uuidv4();
+    const consumerID = uuidv4();
     const addedConsumer: Consumer = {
-      subject: addedSubject,
-      consumerID: addedID,
+      consumer: addedSubject,
+      consumerID,
     };
-    this.consumers[addedID] = addedConsumer;
-    this.currentID ? (this.currentID = addedID) : null;
+    this.consumers[consumerID] = addedConsumer;
+    this.currentID ? (this.currentID = consumerID) : null;
     return addedConsumer;
   }
+
   publish(message: string) {
     if (!this.currentID) return;
-    const consumerSubject = this.consumers[this.currentID].subject;
+    const consumerSubject = this.consumers[this.currentID].consumer;
     consumerSubject.next(new MessageEvent('message', { data: message }));
   }
 

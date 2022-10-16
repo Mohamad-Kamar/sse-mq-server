@@ -9,7 +9,9 @@ export enum QueueEnums {
   DIRECT = 'direct',
 }
 
-export const QueueClassMapping: { [key: string]: QueueConstructableClass } = {
+export const QueueClassMapping: {
+  [queueType: string]: QueueConstructableClass;
+} = {
   fanout: FanoutQueue,
   roundrobin: DirectQueue,
   direct: RoundRobinQueue,

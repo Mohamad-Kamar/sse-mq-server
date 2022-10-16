@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateDatabaseDto } from './dto/create-database.dto';
 import { UpdateDatabaseDto } from './dto/update-database.dto';
 import { IQueue } from '../queue/entities/IQueue';
@@ -14,12 +13,12 @@ export class DatabaseService {
   }
 
   addQueue(queueObject: IQueue): DBQueue {
-    const addedID = uuidv4();
+    const queueKey = queueObject.queueDetails.queueKey;
     const newQueue: DBQueue = {
-      queueID: addedID,
       queue: queueObject,
+      queueKey,
     };
-    this.queues[queueObject.queueDetails.queueKey] = newQueue;
+    this.queues[queueKey] = newQueue;
     return newQueue;
   }
 

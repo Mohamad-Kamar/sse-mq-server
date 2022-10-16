@@ -15,17 +15,18 @@ export class FanoutQueue implements IQueue {
   addConsumer(): Consumer {
     const messageToSend = new MessageEvent('message');
     const addedSubject = new BehaviorSubject(messageToSend);
-    const addedID = uuidv4();
+    const consumerID = uuidv4();
     const addedConsumer: Consumer = {
-      subject: addedSubject,
-      consumerID: addedID,
+      consumer: addedSubject,
+      consumerID,
     };
-    this.consumers[addedID] = addedConsumer;
+    this.consumers[consumerID] = addedConsumer;
     return addedConsumer;
   }
+
   publish(message: string) {
     Object.keys(this.consumers).forEach((consumerID) => {
-      const consumerSubject = this.consumers[consumerID].subject;
+      const consumerSubject = this.consumers[consumerID].consumer;
       consumerSubject.next(new MessageEvent('message', { data: message }));
     });
   }

@@ -8,19 +8,19 @@ interface Constructable<T> {
 export type QueueConstructableClass = Constructable<IQueue>;
 
 export type Consumer = {
-  subject: BehaviorSubject<MessageEvent>;
+  consumer: BehaviorSubject<MessageEvent>;
   consumerID: string;
 };
 
 export type Consumers = {
-  [key: string]: Consumer;
+  [consumerID: string]: Consumer;
 };
 
 export type DBQueue = {
   queue: IQueue;
-  queueID: string;
+  queueKey: string;
 };
 
 export type DBQueues = {
-  [key: string]: DBQueue;
+  [queueKey: string]: DBQueue;
 };
