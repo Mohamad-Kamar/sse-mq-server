@@ -10,6 +10,7 @@ export type QueueConstructableClass = Constructable<IQueue>;
 export type Consumer = {
   consumer: BehaviorSubject<MessageEvent>;
   consumerID: string;
+  queueKey: string;
 };
 
 export type Consumers = {
