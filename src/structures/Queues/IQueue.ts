@@ -1,9 +1,9 @@
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
-import { Consumer } from 'src/Types';
+import { Consumer, Consumers } from 'src/Types';
 
 export interface IQueue {
   queueDetails: CreateQueueDto;
-  consumers: Array<Consumer>;
+  consumers: Consumers;
   addConsumer(): Consumer;
   publish(message: string): void;
 }
