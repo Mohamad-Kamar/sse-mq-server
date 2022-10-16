@@ -4,18 +4,25 @@ import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
 import { Observable } from 'rxjs';
 import { CreateQueueDto } from '../queue/dto/create-queue.dto';
+import { InvalidQueueError } from 'src/structures/Errors/InvalidQueueError';
+import { QueueNotFoundError } from 'src/structures/Errors/QueueNotFoundError';
 
 @Injectable()
 export class ConsumerService {
   constructor(private readonly queueService: QueueService) {}
 
   connect(connectionParms: CreateQueueDto): Observable<MessageEvent> {
+    if (!connectionParms.hasOwnProperty('queueType'))
+      throw new InvalidQueueError('Queue Type Missing');
+    if (!connectionParms.hasOwnProperty('queueKey'))
+      throw new InvalidQueueError('Queue Key Missing');
+
     const { queueKey }: CreateQueueDto = connectionParms;
     const assocQueue = this.queueService.getQueue(queueKey);
     if (!assocQueue) {
-      return this.queueService.createQueue(connectionParms).assocObs;
+      throw new QueueNotFoundError();
     }
-    return assocQueue.assocObs;
+    return assocQueue.queue.addConsumer().subject;
   }
 
   create(createConsumerDto: CreateConsumerDto) {
