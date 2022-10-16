@@ -15,3 +15,12 @@ export type Consumer = {
 export type Consumers = {
   [key: string]: Consumer;
 };
+
+export type DBQueue = {
+  queue: IQueue;
+  queueID: string;
+};
+
+export type DBQueues = {
+  [key: string]: DBQueue;
+};

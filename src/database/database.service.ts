@@ -1,31 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ConnectionParams } from 'src/globalTypes/connectionParams';
 import { DBConnectionParams } from 'src/globalTypes/dbConnectionParams';
-import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
+import { IQueue } from 'src/structures/Queues/IQueue';
+import { DBQueue, DBQueues } from 'src/Types';
 import { CreateDatabaseDto } from './dto/create-database.dto';
 import { UpdateDatabaseDto } from './dto/update-database.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class DatabaseService {
   connections: DBConnectionParams[] = [];
-
-  getQueue(queueKey: string): DBConnectionParams {
+  queues: DBQueues;
+  getQueue(queueKey: string): DBQueue {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const found: DBConnectionParams = this.connections.find(
-      (queue) => queue.connectionParams.queueKey === queueKey,
-    )!;
+    const found: DBQueue = this.queues[queueKey];
     return found;
   }
 
-  addQueue(createQueueDto: CreateQueueDto): DBConnectionParams {
-    const messageToSend = new MessageEvent('message');
-    const addedQueue: DBConnectionParams = {
-      connectionParams: createQueueDto,
-      assocObs: new BehaviorSubject(messageToSend),
+  addQueue(queueObject: IQueue): DBQueue {
+    const addedID = uuidv4();
+    const newQueue: DBQueue = {
+      queueID: addedID,
+      queue: queueObject,
     };
-    this.connections.push(addedQueue);
-    return addedQueue;
+    this.queues[queueObject.queueDetails.queueKey] = newQueue;
+    return newQueue;
   }
 
   create(createDatabaseDto: CreateDatabaseDto) {
