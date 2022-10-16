@@ -1,12 +1,9 @@
 import { CreateQueueDto } from '../../queue/dto/create-queue.dto';
-import {
-  QueueClasses,
-  QueueClassMapping,
-  QueueConstructableClass,
-} from './QueueTypes';
+import { IQueue } from './IQueue';
+import { QueueClassMapping, QueueConstructableClass } from './QueueHelpers';
 
 export class QueueFactory {
-  static createQueue(queueDetails: CreateQueueDto): QueueClasses {
+  static createQueue(queueDetails: CreateQueueDto): IQueue {
     const { queueType } = queueDetails;
     const queueClass: QueueConstructableClass = QueueClassMapping[queueType];
     return new queueClass(queueDetails);
