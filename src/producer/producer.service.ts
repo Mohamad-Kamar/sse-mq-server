@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PublisherMessage } from 'src/globalTypes/publisherMessage';
+import { PublisherMessage } from '../globalTypes/publisherMessage';
 import { QueueService } from '../queue/queue.service';
 
 @Injectable()

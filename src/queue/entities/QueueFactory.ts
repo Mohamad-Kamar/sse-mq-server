@@ -1,5 +1,5 @@
-import { QueueConstructableClass } from 'src/Types';
 import { CreateQueueDto } from '../../queue/dto/create-queue.dto';
+import { QueueConstructableClass } from '../../Types';
 import { IQueue } from './IQueue';
 import { QueueClassMapping } from './QueueHelpers';
 

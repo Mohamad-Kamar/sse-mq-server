@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { QueueService } from '../queue/queue.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
-import { Observable } from 'rxjs';
 import { CreateQueueDto } from '../queue/dto/create-queue.dto';
-import { InvalidQueueError } from 'src/structures/Errors/InvalidQueueError';
-import { QueueNotFoundError } from 'src/structures/Errors/QueueNotFoundError';
+import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
+import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 
 @Injectable()
 export class ConsumerService {

@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { DBConnectionParams } from 'src/globalTypes/dbConnectionParams';
-import { IQueue } from 'src/structures/Queues/IQueue';
-import { DBQueue, DBQueues } from 'src/Types';
+import { v4 as uuidv4 } from 'uuid';
 import { CreateDatabaseDto } from './dto/create-database.dto';
 import { UpdateDatabaseDto } from './dto/update-database.dto';
-import { v4 as uuidv4 } from 'uuid';
+import { IQueue } from '../queue/entities/IQueue';
+import { DBQueues, DBQueue } from '../Types';
 
 @Injectable()
 export class DatabaseService {
-  connections: DBConnectionParams[] = [];
   queues: DBQueues;
   getQueue(queueKey: string): DBQueue {
     const found: DBQueue = this.queues[queueKey];

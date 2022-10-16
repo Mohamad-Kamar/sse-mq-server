@@ -1,7 +1,7 @@
 import { FanoutQueue } from './FanoutQueue';
 import { DirectQueue } from './DirectQueue';
 import { RoundRobinQueue } from './RoundRobinQueue';
-import { QueueConstructableClass } from 'src/Types';
+import { QueueConstructableClass } from '../../Types';
 
 export enum QueueEnums {
   FANOUT = 'fanout',

@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { UpdateQueueDto } from './dto/update-queue.dto';
 import { CreateQueueDto } from './dto/create-queue.dto';
-import { QueueFactory } from 'src/structures/Queues/QueueFactory';
-import { InvalidQueueError } from 'src/structures/Errors/InvalidQueueError';
-import { ExistingQueueError } from 'src/structures/Errors/ExistingQueueError';
-import { IQueue } from 'src/structures/Queues/IQueue';
+import { IQueue } from './entities/IQueue';
+import { QueueFactory } from './entities/QueueFactory';
+import { ExistingQueueError } from '../structures/Errors/ExistingQueueError';
+import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 
 @Injectable()
 export class QueueService {

@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
-import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
 import { IQueue } from './IQueue';
-import { Consumer, Consumers } from 'src/Types';
 import { v4 as uuidv4 } from 'uuid';
+import { Consumers, Consumer } from '../../Types';
+import { CreateQueueDto } from '../dto/create-queue.dto';
 
 export class RoundRobinQueue implements IQueue {
   consumers: Consumers;

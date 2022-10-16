@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { IQueue } from './structures/Queues/IQueue';
+import { IQueue } from './queue/entities/IQueue';
 
 interface Constructable<T> {
   new (...args: any): T;
