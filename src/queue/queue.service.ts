@@ -19,9 +19,9 @@ export class QueueService {
     if (!createQueueDto.hasOwnProperty('queueType'))
       throw new InvalidQueueError('Queue Type Missing');
     if (!createQueueDto.hasOwnProperty('queueKey'))
-      throw new InvalidQueueError('QueueKeyMissing');
+      throw new InvalidQueueError('Queue Key Missing');
     if (this.databaseService.getQueue(createQueueDto['queueKey']))
-      throw new ExistingQueueError('QueueKeyMissing');
+      throw new ExistingQueueError('Queue Already Exists');
 
     const addedQueue: IQueue = QueueFactory.createQueue(createQueueDto);
     console.log('CREATED QUEUE', createQueueDto);

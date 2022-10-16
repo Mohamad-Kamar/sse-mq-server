@@ -12,7 +12,6 @@ export class ProducerService {
     if (!assocQueue) {
       assocQueue = this.queueService.createQueue(publisherMessage);
     }
-    const dataTo = new MessageEvent('message', { data: message });
-    assocQueue.assocObs.next(dataTo);
+    assocQueue.queue.publish(message);
   }
 }

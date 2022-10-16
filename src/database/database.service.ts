@@ -11,7 +11,6 @@ export class DatabaseService {
   connections: DBConnectionParams[] = [];
   queues: DBQueues;
   getQueue(queueKey: string): DBQueue {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const found: DBQueue = this.queues[queueKey];
     return found;
   }
