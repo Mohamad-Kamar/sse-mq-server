@@ -4,6 +4,8 @@ import { IQueue } from './IQueue';
 import { ConsumerNotFoundError } from '../../structures/Errors/ConsumerNotFoundError';
 import { Consumers, Consumer } from '../../Types';
 import { CreateQueueDto } from '../dto/create-queue.dto';
+import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
+import { AlreadyExistsError } from '../../structures/Errors/AlreadyExistsError';
 
 export class DirectQueue implements IQueue {
   consumers: Consumers;
@@ -14,13 +16,17 @@ export class DirectQueue implements IQueue {
     this.consumers = {};
   }
 
-  addConsumer(): string {
+  addConsumer(createConsumerDto: CreateConsumerDto): string {
     const messageToSend = new MessageEvent('message');
     const addedSubject = new BehaviorSubject(messageToSend);
-    const consumerID = uuidv4();
+    const { queueKey } = createConsumerDto;
+    const consumerID = createConsumerDto.consumerID || uuidv4();
+    if (this.consumers[consumerID]) throw new AlreadyExistsError();
+
     const addedConsumer: Consumer = {
       consumer: addedSubject,
       consumerID,
+      queueKey,
     };
     this.consumers[consumerID] = addedConsumer;
     this.currentID ? (this.currentID = consumerID) : null;

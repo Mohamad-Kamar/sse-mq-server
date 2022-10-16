@@ -30,7 +30,7 @@ export class ConsumerService {
     if (!assocQueue) {
       throw new QueueNotFoundError();
     }
-    const targetConsumerID = assocQueue.queue.addConsumer();
+    const targetConsumerID = assocQueue.queue.addConsumer(createConsumerDto);
     return targetConsumerID;
   }
 
