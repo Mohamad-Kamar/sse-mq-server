@@ -4,7 +4,7 @@ import { UpdateQueueDto } from './dto/update-queue.dto';
 import { CreateQueueDto } from './dto/create-queue.dto';
 import { IQueue } from './entities/IQueue';
 import { QueueFactory } from './entities/QueueFactory';
-import { ExistingQueueError } from '../structures/Errors/ExistingQueueError';
+import { AlreadyExistsError } from '../structures/Errors/AlreadyExistsError';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class QueueService {
     if (!createQueueDto.hasOwnProperty('queueKey'))
       throw new InvalidQueueError('Queue Key Missing');
     if (this.databaseService.getQueue(createQueueDto['queueKey']))
-      throw new ExistingQueueError('Queue Already Exists');
+      throw new AlreadyExistsError('Queue Already Exists');
 
     const addedQueue: IQueue = QueueFactory.createQueue(createQueueDto);
     console.log('CREATED QUEUE', createQueueDto);
