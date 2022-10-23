@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { IQueue } from './IQueue';
 import { ConsumerNotFoundError } from '../../structures/Errors/ConsumerNotFoundError';
@@ -17,8 +17,7 @@ export class DirectQueue implements IQueue {
   }
 
   addConsumer(createConsumerDto: CreateConsumerDto): string {
-    const messageToSend = new MessageEvent('message');
-    const addedSubject = new BehaviorSubject(messageToSend);
+    const addedSubject = new ReplaySubject<MessageEvent>();
     const { queueKey } = createConsumerDto;
     const consumerID = createConsumerDto.consumerID || uuidv4();
     if (this.consumers[consumerID]) throw new AlreadyExistsError();

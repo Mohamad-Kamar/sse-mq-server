@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { IQueue } from './queue/entities/IQueue';
 
 interface Constructable<T> {
@@ -8,7 +8,7 @@ interface Constructable<T> {
 export type QueueConstructableClass = Constructable<IQueue>;
 
 export type Consumer = {
-  consumer: BehaviorSubject<MessageEvent>;
+  consumer: ReplaySubject<MessageEvent>;
   consumerID: string;
   queueKey: string;
 };
