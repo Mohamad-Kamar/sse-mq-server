@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { QueueService } from '../queue/queue.service';
@@ -13,12 +14,15 @@ export class ConsumerService {
   constructor(private readonly queueService: QueueService) {}
 
   connect(connectToQueueDto: ConnectToQueueDto): Observable<MessageEvent> {
-    const { queueKey, consumerID } = connectToQueueDto;
+    let { queueKey, consumerID } = connectToQueueDto;
     if (!queueKey) throw new InvalidQueueError('Queue Key Missing');
-    if (!consumerID) throw new InvalidConsumerError('ConsumerID Missing');
 
     const targetQueue = this.queueService.getQueue(queueKey);
-    const targetConsumer = targetQueue.queue.getConsumer(consumerID);
+    let targetConsumer = targetQueue.queue.getConsumer(consumerID);
+    if (!targetConsumer) {
+      targetQueue.queue.addConsumer(connectToQueueDto);
+      targetConsumer = targetQueue.queue.getConsumer(consumerID);
+    }
     return targetConsumer.consumer;
   }
 

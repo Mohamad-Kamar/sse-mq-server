@@ -13,6 +13,6 @@ export const QueueClassMapping: {
   [queueType: string]: QueueConstructableClass;
 } = {
   fanout: FanoutQueue,
-  roundrobin: DirectQueue,
-  direct: RoundRobinQueue,
+  roundrobin: RoundRobinQueue,
+  direct: DirectQueue,
 };

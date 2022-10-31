@@ -26,9 +26,8 @@ export class ConsumerController {
   }
 
   @Post('create')
-  create(@Body() queueDetails: CreateConsumerDto) {
-    this.consumerService.create(queueDetails);
-    return queueDetails;
+  create(@Body() consumerDetails: CreateConsumerDto) {
+    return this.consumerService.create(consumerDetails);
   }
 
   @Get()
