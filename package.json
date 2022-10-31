@@ -1,6 +1,6 @@
 {
   "name": "@mkamar/mq-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Messaging Queue that uses native server sent events",
   "author": "Mohamad Kamar",
   "private": false,
