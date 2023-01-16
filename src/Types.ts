@@ -13,7 +13,14 @@ export type Consumer = {
   queueKey: string;
 };
 
-export type Consumers = {
+export type Message = {
+  messageID: string;
+  consumerID: string;
+  messageContent: string;
+  durable: boolean;
+};
+
+export type ConsumerCollection = {
   [consumerID: string]: Consumer;
 };
 

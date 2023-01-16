@@ -1,11 +1,12 @@
+import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
 import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
-import { Consumers, Consumer } from '../../Types';
+import { ConsumerCollection } from '../../Types';
 import { CreateQueueDto } from '../dto/create-queue.dto';
 
 export interface IQueue {
   queueDetails: CreateQueueDto;
-  consumers: Consumers;
+  consumers: ConsumerCollection;
   addConsumer(createConsumerDto: CreateConsumerDto): string;
-  getConsumer(consumerID: string): Consumer;
+  getConsumer(consumerID: string): InstaceConsumerDto;
   publish(message: string): void;
 }
