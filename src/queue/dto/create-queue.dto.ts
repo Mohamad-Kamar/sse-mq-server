@@ -1,4 +1,8 @@
 export class CreateQueueDto {
-  queueKey = '';
-  queueType = 'fanout';
+  queueKey: string;
+  queueType: string;
+  constructor(queueKey: string, queueType = 'fanout') {
+    this.queueKey = queueKey;
+    this.queueType = queueType;
+  }
 }

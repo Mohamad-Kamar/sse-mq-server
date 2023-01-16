@@ -23,7 +23,7 @@ export class ConsumerService {
       targetQueue.queue.addConsumer(connectToQueueDto);
       targetConsumer = targetQueue.queue.getConsumer(consumerID);
     }
-    return targetConsumer.consumer;
+    return targetConsumer.consumerSubject;
   }
 
   create(createConsumerDto: CreateConsumerDto): string {

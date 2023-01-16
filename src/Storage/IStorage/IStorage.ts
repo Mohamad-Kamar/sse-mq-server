@@ -1,14 +1,16 @@
+import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
 import { PublisherMessage } from 'src/globalTypes/publisherMessage';
-import { QueueInstance, Consumer, Message } from './IStorage_Types';
+import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
+import { ConsumerCollection, Message, MessageCollection } from '../../Types';
 
 export interface IStorage {
   reset(): boolean;
-  getQueue(queueKey: string): QueueInstance;
-  getQueueCosumers(queueKey: string): Consumer[];
-  createQueue(queueDetails: QueueInstance): boolean;
-  getConsumer(consumerID: string): Consumer;
-  createConsumer(consumerDetails: Consumer): boolean;
-  getConsumerMessages(consumerID: string): Message[];
+  getQueue(queueKey: string): CreateQueueDto;
+  getQueueCosumers(queueKey: string): ConsumerCollection;
+  createQueue(queueDetails: CreateQueueDto): boolean;
+  getConsumer(consumerID: string): InstaceConsumerDto;
+  createConsumer(consumerDetails: InstaceConsumerDto): boolean;
+  getConsumerMessages(consumerID: string): MessageCollection;
   getMessage(messageID: string): Message;
   createMessage(messageDetails: PublisherMessage): boolean;
 }

@@ -1,4 +1,4 @@
-import { ReplaySubject } from 'rxjs';
+import { InstaceConsumerDto } from './consumer/dto/instance-consumer.dto';
 import { IQueue } from './queue/entities/IQueue';
 
 interface Constructable<T> {
@@ -7,12 +7,6 @@ interface Constructable<T> {
 
 export type QueueConstructableClass = Constructable<IQueue>;
 
-export type Consumer = {
-  consumerSubject?: ReplaySubject<MessageEvent>;
-  consumerID: string;
-  queueKey: string;
-};
-
 export type Message = {
   messageID: string;
   consumerID: string;
@@ -20,15 +14,14 @@ export type Message = {
   durable: boolean;
 };
 
+export type MessageCollection = {
+  [messageID: string]: Message;
+};
+
 export type ConsumerCollection = {
-  [consumerID: string]: Consumer;
+  [consumerID: string]: InstaceConsumerDto;
 };
 
-export type DBQueue = {
-  queue: IQueue;
-  queueKey: string;
-};
-
-export type DBQueues = {
-  [queueKey: string]: DBQueue;
+export type QueueCollection = {
+  [queueKey: string]: IQueue;
 };

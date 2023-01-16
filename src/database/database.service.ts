@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { IQueue } from '../queue/entities/IQueue';
-import { DBQueues, DBQueue } from '../Types';
+import { QueueCollection } from '../Types';
 
 @Injectable()
 export class DatabaseService {
-  queues: DBQueues;
+  queues: QueueCollection;
   constructor() {
     this.queues = {};
   }
-  getQueue(queueKey: string): DBQueue {
-    const found: DBQueue = this.queues[queueKey];
+  getQueue(queueKey: string): IQueue {
+    const found: IQueue = this.queues[queueKey];
     return found;
   }
 
-  addQueue(queueObject: IQueue): DBQueue {
+  addQueue(queueObject: IQueue): boolean {
     const queueKey = queueObject.queueDetails.queueKey;
-    const newQueue: DBQueue = {
-      queue: queueObject,
-      queueKey,
-    };
-    this.queues[queueKey] = newQueue;
-    return newQueue;
+    this.queues[queueKey] = queueObject;
+    return true;
   }
   reset() {}
 }

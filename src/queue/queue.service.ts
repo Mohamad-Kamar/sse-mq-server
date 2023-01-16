@@ -15,7 +15,7 @@ export class QueueService {
     return this.databaseService.getQueue(queueKey);
   }
 
-  createQueue(createQueueDto: CreateQueueDto) {
+  createQueue(createQueueDto: CreateQueueDto): boolean {
     if (!createQueueDto.hasOwnProperty('queueType'))
       throw new InvalidQueueError('Queue Type Missing');
     if (!createQueueDto.hasOwnProperty('queueKey'))
