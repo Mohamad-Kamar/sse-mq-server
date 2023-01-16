@@ -23,7 +23,7 @@ export class DirectQueue implements IQueue {
     if (this.consumers[consumerID]) throw new AlreadyExistsError();
 
     const addedConsumer: Consumer = {
-      consumer: addedSubject,
+      consumerSubject: addedSubject,
       consumerID,
       queueKey,
     };
@@ -38,8 +38,9 @@ export class DirectQueue implements IQueue {
 
   publish(message: string) {
     if (!this.currentID) return;
-    const consumerSubject = this.consumers[this.currentID].consumer;
-    consumerSubject.next(new MessageEvent('message', { data: message }));
+    const consumerSubject = this.consumers[this.currentID].consumerSubject;
+    if (consumerSubject)
+      consumerSubject.next(new MessageEvent('message', { data: message }));
   }
 
   setID(consumerID: string): void {

@@ -8,7 +8,7 @@ interface Constructable<T> {
 export type QueueConstructableClass = Constructable<IQueue>;
 
 export type Consumer = {
-  consumer: ReplaySubject<MessageEvent>;
+  consumerSubject?: ReplaySubject<MessageEvent>;
   consumerID: string;
   queueKey: string;
 };

@@ -21,7 +21,7 @@ export class FanoutQueue implements IQueue {
     if (this.consumers[consumerID]) throw new AlreadyExistsError();
 
     const addedConsumer: Consumer = {
-      consumer: addedSubject,
+      consumerSubject: addedSubject,
       consumerID,
       queueKey,
     };
@@ -35,8 +35,9 @@ export class FanoutQueue implements IQueue {
 
   publish(message: string) {
     Object.keys(this.consumers).forEach((consumerID) => {
-      const consumerSubject = this.consumers[consumerID].consumer;
-      consumerSubject.next(new MessageEvent('message', { data: message }));
+      const consumerSubject = this.consumers[consumerID].consumerSubject;
+      if (consumerSubject)
+        consumerSubject.next(new MessageEvent('message', { data: message }));
     });
   }
 }

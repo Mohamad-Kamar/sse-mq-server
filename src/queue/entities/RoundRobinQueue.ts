@@ -24,7 +24,7 @@ export class RoundRobinQueue implements IQueue {
     if (this.consumers[consumerID]) throw new AlreadyExistsError();
 
     const addedConsumer: Consumer = {
-      consumer: addedSubject,
+      consumerSubject: addedSubject,
       consumerID,
       queueKey,
     };
@@ -41,9 +41,11 @@ export class RoundRobinQueue implements IQueue {
     this.currentIndex = this.currentIndex % currentKeys.length;
     const targetID = currentKeys[this.currentIndex];
     const targetConsumer = this.consumers[targetID];
-    targetConsumer.consumer.next(
-      new MessageEvent('message', { data: message }),
-    );
-    this.currentIndex = (this.currentIndex + 1) % currentKeys.length;
+    if (targetConsumer && targetConsumer.consumerSubject) {
+      targetConsumer.consumerSubject.next(
+        new MessageEvent('message', { data: message }),
+      );
+      this.currentIndex = (this.currentIndex + 1) % currentKeys.length;
+    }
   }
 }
