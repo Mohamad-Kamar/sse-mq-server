@@ -1,17 +1,17 @@
 import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
-import { InstanceMessageCollection } from '../../Types';
 import { IStorage } from '../IStorage/IStorage';
 import {
   ConsumerCollection,
   Message,
+  MessageCollection,
   QueueCollection,
 } from '../IStorage/IStorage_Types';
 
 export class LocalStorage implements IStorage {
   queues: QueueCollection;
   consumers: ConsumerCollection;
-  messages: InstanceMessageCollection;
+  messages: MessageCollection;
   constructor(queues = {}, consumers = {}, messages = {}) {
     this.queues = queues;
     this.consumers = consumers;
@@ -30,7 +30,7 @@ export class LocalStorage implements IStorage {
   getConsumers(): ConsumerCollection {
     return this.consumers;
   }
-  getMessages(): InstanceMessageCollection {
+  getMessages(): MessageCollection {
     return this.messages;
   }
 

@@ -1,34 +1,27 @@
 import { ReplaySubject } from 'rxjs';
-import {
-  Message,
-  MessageCollection,
-} from 'src/Storage/IStorage/IStorage_Types';
+import { InstanceMessage, InstanceMessageCollection } from 'src/Types';
 
 export class InstaceConsumer {
   queueKey: string;
   consumerID: string;
-  messages: MessageCollection;
-  consumerSubject: ReplaySubject<MessageEvent>;
+  messages: InstanceMessageCollection;
+  consumerSubject: ReplaySubject<MessageEvent<string>>;
   constructor(
     queueKey: string,
     consumerID: string,
-    messages: MessageCollection = {},
+    messages: InstanceMessageCollection = {},
   ) {
     this.queueKey = queueKey;
     this.consumerID = consumerID;
     this.messages = messages;
-    this.consumerSubject = new ReplaySubject();
+    this.consumerSubject = new ReplaySubject<MessageEvent>();
   }
 
   getMessages() {
     return this.messages;
   }
 
-  setMessages(messages: MessageCollection) {
-    this.messages = messages;
-  }
-
-  addMessage(message: Message) {
+  addMessage(message: InstanceMessage) {
     this.messages[message.messageID] = message;
   }
 }

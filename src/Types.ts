@@ -11,7 +11,7 @@ export type QueueConstructableClass = Constructable<IQueue>;
 export type InstanceMessage = {
   messageID: string;
   consumerID: string;
-  messageContent: string;
+  messageEvent: MessageEvent<string>;
   durable: boolean;
 };
 
