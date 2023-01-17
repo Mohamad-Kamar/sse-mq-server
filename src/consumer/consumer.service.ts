@@ -65,14 +65,6 @@ export class ConsumerService {
   }
 
   findAll() {
-    return `This action returns all consumer`;
-  }
-
-  update(id: number, updateConsumerDto: UpdateConsumerDto) {
-    return `This action updates a #${id} consumer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} consumer`;
+    return this.consumers;
   }
 }
