@@ -1,17 +1,17 @@
-import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
+import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
+import { InstanceMessageCollection } from '../../Types';
+import { IStorage } from '../IStorage/IStorage';
 import {
   ConsumerCollection,
   Message,
-  MessageCollection,
   QueueCollection,
-} from '../../Types';
-import { IStorage } from '../IStorage/IStorage';
+} from '../IStorage/IStorage_Types';
 
 export class LocalStorage implements IStorage {
   queues: QueueCollection;
   consumers: ConsumerCollection;
-  messages: MessageCollection;
+  messages: InstanceMessageCollection;
   constructor(queues = {}, consumers = {}, messages = {}) {
     this.queues = queues;
     this.consumers = consumers;
@@ -23,19 +23,15 @@ export class LocalStorage implements IStorage {
     this.messages = {};
     return true;
   }
-
-  getQueue(queueKey: string): CreateQueueDto {
-    return this.queues[queueKey];
+  getQueues(): QueueCollection {
+    return this.queues;
   }
 
-  getQueueCosumers(queueKey: string): ConsumerCollection {
-    const matchingConsumers: ConsumerCollection = {};
-    Object.values(this.consumers).forEach((consumer: InstaceConsumerDto) => {
-      if (consumer.queueKey === queueKey) {
-        matchingConsumers[consumer.consumerID] = consumer;
-      }
-    });
-    return matchingConsumers;
+  getConsumers(): ConsumerCollection {
+    return this.consumers;
+  }
+  getMessages(): InstanceMessageCollection {
+    return this.messages;
   }
 
   createQueue(queueDetails: CreateQueueDto): boolean {
@@ -43,27 +39,9 @@ export class LocalStorage implements IStorage {
     return true;
   }
 
-  getConsumer(consumerID: string): InstaceConsumerDto {
-    return this.consumers[consumerID];
-  }
-
-  createConsumer(consumerDetails: InstaceConsumerDto): boolean {
+  createConsumer(consumerDetails: CreateConsumerDto): boolean {
     this.consumers[consumerDetails.consumerID] = consumerDetails;
     return true;
-  }
-
-  getConsumerMessages(consumerID: string): MessageCollection {
-    const matchingMessages: MessageCollection = {};
-    Object.values(this.messages).forEach((message: Message) => {
-      if (message.consumerID === consumerID) {
-        matchingMessages[message.messageID] = message;
-      }
-    });
-    return matchingMessages;
-  }
-
-  getMessage(messageID: string): Message {
-    return this.messages[messageID];
   }
 
   createMessage(messageDetails: Message): boolean {
