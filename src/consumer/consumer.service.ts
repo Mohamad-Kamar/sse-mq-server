@@ -44,15 +44,14 @@ export class ConsumerService {
     if (this.findOne(createConsumerDto.consumerID))
       throw new AlreadyExistsError();
 
+    this.databaseService.saveConsumer(createConsumerDto);
     let consumerInstace = new InstaceConsumer(
       createConsumerDto.queueKey,
       createConsumerDto.consumerID,
     );
-
-    this.databaseService.saveConsumer(createConsumerDto);
     assocQueue.addConsumer(consumerInstace);
     this.addConsumer(consumerInstace);
-
+    console.log('CREATED Consumer');
     return createConsumerDto;
   }
 

@@ -6,45 +6,53 @@ import { IQueue } from './entities/IQueue';
 import { QueueFactory } from './entities/QueueFactory';
 import { AlreadyExistsError } from '../structures/Errors/AlreadyExistsError';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
+import { InstanceQueueCollection } from 'src/Types';
 
 @Injectable()
 export class QueueService {
-  constructor(private readonly databaseService: DatabaseService) {}
-
-  getQueue(queueKey: string) {
-    return this.databaseService.getQueue(queueKey);
+  queues: InstanceQueueCollection;
+  constructor(private readonly databaseService: DatabaseService) {
+    this.queues = this.databaseService.getQueues();
   }
 
-  createQueue(createQueueDto: CreateQueueDto): boolean {
+  getQueue(queueKey: string): IQueue {
+    return this.queues[queueKey];
+  }
+
+  create(createQueueDto: CreateQueueDto): CreateQueueDto {
     if (!createQueueDto.hasOwnProperty('queueType'))
       throw new InvalidQueueError('Queue Type Missing');
     if (!createQueueDto.hasOwnProperty('queueKey'))
       throw new InvalidQueueError('Queue Key Missing');
-    if (this.databaseService.getQueue(createQueueDto['queueKey']))
+    if (this.getQueue(createQueueDto['queueKey']))
       throw new AlreadyExistsError('Queue Already Exists');
 
-    const addedQueue: IQueue = QueueFactory.createQueue(createQueueDto);
-    console.log('CREATED QUEUE', createQueueDto);
-    return this.databaseService.addQueue(addedQueue);
+    this.databaseService.saveQueue(createQueueDto);
+
+    const queueInstance: IQueue = QueueFactory.createQueue(createQueueDto);
+    this.addQueue(queueInstance);
+    console.log('CREATED QUEUE');
+    return createQueueDto;
   }
 
-  connect(queueKey: string) {
-    return this.databaseService.getQueue(queueKey);
+  addQueue(queueInstance: IQueue) {
+    this.queues[queueInstance.queueKey] = queueInstance;
   }
 
   findAll() {
-    return `This action returns all queue`;
+    return this.queues;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} queue`;
+  findOne(queueKey: string) {
+    return this.queues[queueKey];
   }
 
   update(id: number, updateQueueDto: UpdateQueueDto) {
     return `This action updates a #${id} queue`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} queue`;
+  remove(queueKey: string) {
+    delete this.queues[queueKey];
+    this.databaseService.deleteQueue(queueKey);
   }
 }

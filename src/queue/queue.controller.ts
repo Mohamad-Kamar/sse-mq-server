@@ -17,7 +17,7 @@ export class QueueController {
 
   @Post()
   create(@Body() createQueueDto: CreateQueueDto) {
-    return this.queueService.createQueue(createQueueDto);
+    return this.queueService.create(createQueueDto);
   }
 
   @Get()
