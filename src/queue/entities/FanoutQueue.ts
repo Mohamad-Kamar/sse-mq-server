@@ -1,6 +1,4 @@
-import { ReplaySubject } from 'rxjs';
 import { IQueue } from './IQueue';
-import { v4 as uuidv4 } from 'uuid';
 import { InstanceConsumerCollection } from '../../Types';
 import { CreateQueueDto } from '../dto/create-queue.dto';
 import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
@@ -9,9 +7,11 @@ import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
 
 export class FanoutQueue implements IQueue {
   consumers: InstanceConsumerCollection;
-  queueDetails: CreateQueueDto;
-  constructor(queueDetails: CreateQueueDto) {
-    this.queueDetails = queueDetails;
+  queueKey: string;
+  queueType: string;
+  constructor(queueKey: string, queueType: string) {
+    this.queueKey = queueKey;
+    this.queueType = queueType;
     this.consumers = {};
   }
 
@@ -19,30 +19,15 @@ export class FanoutQueue implements IQueue {
     return this.consumers;
   }
 
-  addConsumer(createConsumerDto: CreateConsumerDto): string {
-    const addedSubject = new ReplaySubject<MessageEvent>();
-    const { queueKey } = createConsumerDto;
-    const consumerID = createConsumerDto.consumerID || uuidv4();
-    if (this.consumers[consumerID]) throw new AlreadyExistsError();
-
-    const addedConsumer: InstaceConsumer = {
-      consumerSubject: addedSubject,
-      consumerID,
-      queueKey,
-    };
-    this.consumers[consumerID] = addedConsumer;
-    return consumerID;
+  addConsumer(instanceConsumer: InstaceConsumer): void {
+    this.consumers[instanceConsumer.consumerID] = instanceConsumer;
   }
 
   getConsumer(consumerID: string): InstaceConsumer {
     return this.consumers[consumerID];
   }
 
-  publish(message: string) {
-    Object.keys(this.consumers).forEach((consumerID) => {
-      const consumerSubject = this.consumers[consumerID].consumerSubject;
-      if (consumerSubject)
-        consumerSubject.next(new MessageEvent('message', { data: message }));
-    });
+  getPublishingConsumers(): InstaceConsumer[] {
+    return Object.values(this.consumers);
   }
 }

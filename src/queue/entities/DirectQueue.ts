@@ -1,19 +1,16 @@
-import { ReplaySubject } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
 import { IQueue } from './IQueue';
 import { ConsumerNotFoundError } from '../../structures/Errors/ConsumerNotFoundError';
 import { InstanceConsumerCollection } from '../../Types';
-import { CreateQueueDto } from '../dto/create-queue.dto';
-import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
-import { AlreadyExistsError } from '../../structures/Errors/AlreadyExistsError';
 import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
 
 export class DirectQueue implements IQueue {
   consumers: InstanceConsumerCollection;
-  queueDetails: CreateQueueDto;
-  currentID: string;
-  constructor(queueDetails: CreateQueueDto) {
-    this.queueDetails = queueDetails;
+  queueKey: string;
+  queueType: string;
+  currentConsumerID: string;
+  constructor(queueKey: string, queueType: string) {
+    this.queueKey = queueKey;
+    this.queueType = queueType;
     this.consumers = {};
   }
 
@@ -21,29 +18,29 @@ export class DirectQueue implements IQueue {
     return this.consumers;
   }
 
-  addConsumer(addedConsumer: InstaceConsumer): void {
-    this.consumers[addedConsumer.consumerID] = addedConsumer;
+  addConsumer(instanceConsumer: InstaceConsumer): void {
+    this.consumers[instanceConsumer.consumerID] = instanceConsumer;
   }
 
   getConsumer(consumerID: string): InstaceConsumer {
     return this.consumers[consumerID];
   }
 
-  publish(message: string) {
-    if (!this.currentID) return;
-    const consumerSubject = this.consumers[this.currentID].consumerSubject;
-    if (consumerSubject)
-      consumerSubject.next(new MessageEvent('message', { data: message }));
+  getPublishingConsumers(): InstaceConsumer[] {
+    if (!this.currentConsumerID) return [];
+    return [this.consumers[this.currentConsumerID]];
   }
 
   setID(consumerID: string): void {
-    if (this.consumers.hasOwnProperty(consumerID)) this.currentID = consumerID;
+    if (this.consumers.hasOwnProperty(consumerID))
+      this.currentConsumerID = consumerID;
     else
       throw new ConsumerNotFoundError(
-        `No Consumer with ID ${consumerID} in Queue ${this.queueDetails.queueKey}`,
+        `No Consumer with ID ${consumerID} in Queue ${this.queueKey}`,
       );
   }
+
   getID(): string {
-    return this.currentID;
+    return this.currentConsumerID;
   }
 }

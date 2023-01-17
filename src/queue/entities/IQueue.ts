@@ -6,8 +6,7 @@ export interface IQueue {
   queueType: string;
   consumers: InstanceConsumerCollection;
   getConsumers(): InstanceConsumerCollection;
-  getPublishingConsumers(): InstaceConsumer[];
   addConsumer(instanceConsumer: InstaceConsumer): void;
   getConsumer(consumerID: string): InstaceConsumer;
-  publish(message: string): void;
+  getPublishingConsumers(): InstaceConsumer[];
 }
