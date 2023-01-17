@@ -1,4 +1,4 @@
-import { InstaceConsumerDto } from './consumer/dto/instance-consumer.dto';
+import { InstaceConsumer } from './consumer/dto/instance-consumer.dto';
 import { CreateQueueDto } from './queue/dto/create-queue.dto';
 import { IQueue } from './queue/entities/IQueue';
 
@@ -8,21 +8,25 @@ interface Constructable<T> {
 
 export type QueueConstructableClass = Constructable<IQueue>;
 
-export type Message = {
+export type InstanceMessage = {
   messageID: string;
   consumerID: string;
   messageContent: string;
   durable: boolean;
 };
 
-export type MessageCollection = {
-  [messageID: string]: Message;
+export type InstanceMessageCollection = {
+  [messageID: string]: InstanceMessage;
 };
 
-export type ConsumerCollection = {
-  [consumerID: string]: InstaceConsumerDto;
+export type InstanceConsumerCollection = {
+  [consumerID: string]: InstaceConsumer;
 };
 
 export type QueueCollection = {
   [queueKey: string]: CreateQueueDto;
+};
+
+export type InstanceQueueCollection = {
+  [queueKey: string]: IQueue;
 };

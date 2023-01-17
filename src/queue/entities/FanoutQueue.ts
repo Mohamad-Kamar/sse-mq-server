@@ -1,18 +1,22 @@
 import { ReplaySubject } from 'rxjs';
 import { IQueue } from './IQueue';
 import { v4 as uuidv4 } from 'uuid';
-import { ConsumerCollection } from '../../Types';
+import { InstanceConsumerCollection } from '../../Types';
 import { CreateQueueDto } from '../dto/create-queue.dto';
 import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
 import { AlreadyExistsError } from '../../structures/Errors/AlreadyExistsError';
-import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
+import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
 
 export class FanoutQueue implements IQueue {
-  consumers: ConsumerCollection;
+  consumers: InstanceConsumerCollection;
   queueDetails: CreateQueueDto;
   constructor(queueDetails: CreateQueueDto) {
     this.queueDetails = queueDetails;
     this.consumers = {};
+  }
+
+  getConsumers(): InstanceConsumerCollection {
+    return this.consumers;
   }
 
   addConsumer(createConsumerDto: CreateConsumerDto): string {
@@ -21,7 +25,7 @@ export class FanoutQueue implements IQueue {
     const consumerID = createConsumerDto.consumerID || uuidv4();
     if (this.consumers[consumerID]) throw new AlreadyExistsError();
 
-    const addedConsumer: InstaceConsumerDto = {
+    const addedConsumer: InstaceConsumer = {
       consumerSubject: addedSubject,
       consumerID,
       queueKey,
@@ -30,7 +34,7 @@ export class FanoutQueue implements IQueue {
     return consumerID;
   }
 
-  getConsumer(consumerID: string): InstaceConsumerDto {
+  getConsumer(consumerID: string): InstaceConsumer {
     return this.consumers[consumerID];
   }
 

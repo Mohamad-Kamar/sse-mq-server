@@ -1,4 +1,4 @@
 export class CreateConsumerDto {
   queueKey: string;
-  consumerID?: string;
+  consumerID: string;
 }
