@@ -1,20 +1,9 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Sse,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Sse, Query } from '@nestjs/common';
 import { MessageEvent } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
 import { ConsumerService } from './consumer.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
-import { UpdateConsumerDto } from './dto/update-consumer.dto';
 
 @Controller('consumer')
 export class ConsumerController {
@@ -35,22 +24,9 @@ export class ConsumerController {
     return this.consumerService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.consumerService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateConsumerDto: UpdateConsumerDto,
-  ) {
-    return this.consumerService.update(+id, updateConsumerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.consumerService.remove(+id);
+  @Get(':consumerID')
+  findOne(@Param('consumerID') consumerID: string) {
+    return this.consumerService.findOne(consumerID);
   }
 
   @Get('healthcheck')
