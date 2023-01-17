@@ -1,16 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
+import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
-import { QueueCollection } from '../Types';
+import { IQueue } from 'src/queue/entities/IQueue';
+import { QueueFactory } from 'src/queue/entities/QueueFactory';
+import { IStorage } from 'src/Storage/IStorage/IStorage';
+import {
+  ConsumerCollection,
+  QueueCollection,
+} from 'src/Storage/IStorage/IStorage_Types';
+import { LocalStorage } from 'src/Storage/LocalStorage/LocalStorage';
+import {
+  InstanceConsumerCollection,
+  InstanceMessageCollection,
+  InstanceQueueCollection,
+} from '../Types';
 
 @Injectable()
 export class DatabaseService {
-  queues: QueueCollection;
+  storage: IStorage;
+  messages: InstanceMessageCollection;
+  consumers: InstanceConsumerCollection;
+  queues: InstanceQueueCollection;
+
   constructor() {
-    this.queues = {};
+    console.log('LOADING DATABASE SERVICE');
+    this.storage = new LocalStorage();
+    this.loadStorage();
   }
-  getQueue(queueKey: string): CreateQueueDto {
-    const found: CreateQueueDto = this.queues[queueKey];
-    return found;
+
+  getQueue(queueKey: string): IQueue {
+    return this.queues[queueKey];
   }
 
   addQueue(queueObject: CreateQueueDto): boolean {
@@ -18,5 +38,65 @@ export class DatabaseService {
     this.queues[queueKey] = queueObject;
     return true;
   }
+
   reset() {}
+
+  loadStorage() {
+    this.messages = this.storage.getMessages();
+
+    const storedConsumers = this.storage.getConsumers();
+    this.consumers = this.structureConsumers(storedConsumers);
+
+    const storedQueues = this.storage.getQueues();
+    this.queues = this.structureQueues(storedQueues);
+  }
+
+  structureConsumers(
+    storedConsumers: ConsumerCollection,
+  ): InstanceConsumerCollection {
+    const instanceConsumers: InstanceConsumerCollection = {};
+    // Create hollow consumers without their message collections
+    Object.values(storedConsumers).forEach((consumer) => {
+      instanceConsumers[consumer.consumerID] = new InstaceConsumer(
+        consumer.queueKey,
+        consumer.consumerID,
+      );
+    });
+
+    // Add Message collections to consumers
+    Object.values(this.messages).forEach((instanceMessage) => {
+      instanceConsumers[instanceMessage.consumerID].addMessage(instanceMessage);
+    });
+
+    return instanceConsumers;
+  }
+
+  structureQueues(storedQueues: QueueCollection): InstanceQueueCollection {
+    const instanceQueues: InstanceQueueCollection = {};
+    // Create hollow queue without their consumer collections
+    Object.values(storedQueues).forEach((queue) => {
+      instanceQueues[queue.queueKey] = QueueFactory.createQueue(queue);
+    });
+
+    // Add consumer collections to queues
+    Object.values(this.consumers).forEach((instanceConsumer) => {
+      instanceQueues[instanceConsumer.consumerID].addConsumer(instanceConsumer);
+    });
+
+    return instanceQueues;
+  }
+
+  getMessages() {
+    return this.messages;
+  }
+  getConsumers() {
+    return this.consumers;
+  }
+  getQueues() {
+    return this.queues;
+  }
+
+  saveConsumer(createConsumerDto: CreateConsumerDto) {
+    this.storage.createConsumer(createConsumerDto);
+  }
 }
