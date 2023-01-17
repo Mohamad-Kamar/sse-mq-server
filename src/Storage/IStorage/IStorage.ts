@@ -12,5 +12,5 @@ export interface IStorage {
   createConsumer(consumerDetails: InstaceConsumerDto): boolean;
   getConsumerMessages(consumerID: string): MessageCollection;
   getMessage(messageID: string): Message;
-  createMessage(messageDetails: PublisherMessage): boolean;
+  createMessage(messageDetails: Message): boolean;
 }

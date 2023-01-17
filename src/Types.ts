@@ -1,4 +1,5 @@
 import { InstaceConsumerDto } from './consumer/dto/instance-consumer.dto';
+import { CreateQueueDto } from './queue/dto/create-queue.dto';
 import { IQueue } from './queue/entities/IQueue';
 
 interface Constructable<T> {
@@ -23,5 +24,5 @@ export type ConsumerCollection = {
 };
 
 export type QueueCollection = {
-  [queueKey: string]: IQueue;
+  [queueKey: string]: CreateQueueDto;
 };
