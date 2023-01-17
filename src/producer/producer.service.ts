@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PublisherMessage } from '../globalTypes/publisherMessage';
+import { ProducerMessage } from '../globalTypes/PublisherMessage';
 import { QueueService } from '../queue/queue.service';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 
@@ -7,8 +7,8 @@ import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 export class ProducerService {
   constructor(private readonly queueService: QueueService) {}
 
-  publish(publisherMessage: PublisherMessage) {
-    const { queueKey, message }: PublisherMessage = publisherMessage;
+  publish(PublisherMessage: ProducerMessage) {
+    const { queueKey, message }: ProducerMessage = PublisherMessage;
     const assocQueue = this.queueService.getQueue(queueKey);
     if (!assocQueue) {
       throw new QueueNotFoundError();

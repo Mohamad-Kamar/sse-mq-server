@@ -1,5 +1,4 @@
 import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
-import { PublisherMessage } from 'src/globalTypes/publisherMessage';
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
 import {
   ConsumerCollection,
@@ -57,7 +56,7 @@ export class LocalStorage implements IStorage {
     const matchingMessages: MessageCollection = {};
     Object.values(this.messages).forEach((message: Message) => {
       if (message.consumerID === consumerID) {
-        matchingMessages[message.consumerID] = message;
+        matchingMessages[message.messageID] = message;
       }
     });
     return matchingMessages;

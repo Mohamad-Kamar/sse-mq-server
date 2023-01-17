@@ -1,5 +1,4 @@
 import { InstaceConsumerDto } from 'src/consumer/dto/instance-consumer.dto';
-import { PublisherMessage } from 'src/globalTypes/publisherMessage';
 import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
 import { ConsumerCollection, Message, MessageCollection } from '../../Types';
 

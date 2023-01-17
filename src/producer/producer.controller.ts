@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { PublisherMessage } from '../globalTypes/publisherMessage';
+import { ProducerMessage } from '../globalTypes/PublisherMessage';
 import { ProducerService } from './producer.service';
 
 @Controller('producer')
@@ -7,7 +7,7 @@ export class ProducerController {
   constructor(private readonly producerService: ProducerService) {}
 
   @Post()
-  publish(@Body() messageBody: PublisherMessage) {
+  publish(@Body() messageBody: ProducerMessage) {
     return this.producerService.publish(messageBody);
   }
 }
