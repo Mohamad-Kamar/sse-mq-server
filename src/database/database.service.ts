@@ -33,13 +33,12 @@ export class DatabaseService {
     return this.queues[queueKey];
   }
 
-  addQueue(queueObject: CreateQueueDto): boolean {
-    const queueKey = queueObject.queueKey;
-    this.queues[queueKey] = queueObject;
-    return true;
+  reset() {
+    this.messages = {};
+    this.consumers = {};
+    this.queues = {};
+    this.storage.reset();
   }
-
-  reset() {}
 
   loadStorage() {
     this.messages = this.storage.getMessages();
@@ -98,5 +97,14 @@ export class DatabaseService {
 
   saveConsumer(createConsumerDto: CreateConsumerDto) {
     this.storage.createConsumer(createConsumerDto);
+  }
+
+  saveQueue(queueDetails: CreateQueueDto): boolean {
+    this.storage.createQueue(queueDetails);
+    return true;
+  }
+
+  deleteQueue(queueKey: string) {
+    this.storage.deleteQueue(queueKey);
   }
 }
