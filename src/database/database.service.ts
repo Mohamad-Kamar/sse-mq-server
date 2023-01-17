@@ -7,11 +7,14 @@ import { QueueFactory } from 'src/queue/entities/QueueFactory';
 import { IStorage } from 'src/Storage/IStorage/IStorage';
 import {
   ConsumerCollection,
+  Message,
+  MessageCollection,
   QueueCollection,
 } from 'src/Storage/IStorage/IStorage_Types';
 import { LocalStorage } from 'src/Storage/LocalStorage/LocalStorage';
 import {
   InstanceConsumerCollection,
+  InstanceMessage,
   InstanceMessageCollection,
   InstanceQueueCollection,
 } from '../Types';
@@ -41,13 +44,30 @@ export class DatabaseService {
   }
 
   loadStorage() {
-    this.messages = this.storage.getMessages();
+    const storedMessages = this.storage.getMessages();
+    this.messages = this.structureMessages(storedMessages);
 
     const storedConsumers = this.storage.getConsumers();
     this.consumers = this.structureConsumers(storedConsumers);
 
     const storedQueues = this.storage.getQueues();
     this.queues = this.structureQueues(storedQueues);
+  }
+
+  structureMessages(
+    storedMessages: MessageCollection,
+  ): InstanceMessageCollection {
+    const instanceMessages: InstanceMessageCollection = {};
+    Object.values(storedMessages).forEach((storedMessage) => {
+      const { messageID, consumerID, messageContent, durable } = storedMessage;
+      instanceMessages[storedMessage.messageID] = {
+        messageID,
+        consumerID,
+        durable,
+        messageEvent: new MessageEvent('message', { data: messageContent }),
+      };
+    });
+    return instanceMessages;
   }
 
   structureConsumers(
@@ -106,5 +126,13 @@ export class DatabaseService {
 
   deleteQueue(queueKey: string) {
     this.storage.deleteQueue(queueKey);
+  }
+
+  addMessage(instanceMessage: InstanceMessage) {
+    this.messages[instanceMessage.messageID] = instanceMessage;
+  }
+
+  saveMessage(messageBody: Message) {
+    this.storage.createMessage(messageBody);
   }
 }
