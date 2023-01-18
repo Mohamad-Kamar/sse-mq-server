@@ -25,9 +25,9 @@ export class QueueController {
     return this.queueService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.queueService.findOne(+id);
+  @Get(':queueKey')
+  findOne(@Param('queueKey') queueKey: string) {
+    return this.queueService.findOne(queueKey);
   }
 
   @Patch(':id')
@@ -35,8 +35,8 @@ export class QueueController {
     return this.queueService.update(+id, updateQueueDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.queueService.remove(+id);
+  @Delete(':queueKey')
+  remove(@Param('queueKey') queueKey: string) {
+    return this.queueService.remove(queueKey);
   }
 }
