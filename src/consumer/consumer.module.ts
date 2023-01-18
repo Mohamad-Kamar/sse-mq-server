@@ -5,5 +5,6 @@ import { ConsumerController } from './consumer.controller';
 @Module({
   controllers: [ConsumerController],
   providers: [ConsumerService],
+  exports: [ConsumerService],
 })
 export class ConsumerModule {}
