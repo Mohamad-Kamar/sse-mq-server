@@ -15,6 +15,13 @@ export class InstaceConsumer {
     this.consumerID = consumerID;
     this.messages = messages;
     this.consumerSubject = new ReplaySubject<InstanceMessage>();
+    this.preloadMessages();
+  }
+
+  preloadMessages() {
+    Object.values(this.messages).forEach((message) => {
+      this.consumerSubject.next(message);
+    });
   }
 
   getMessages() {
