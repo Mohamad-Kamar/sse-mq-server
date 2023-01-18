@@ -3,7 +3,7 @@ import { InstanceConsumerCollection } from '../../Types';
 import { CreateQueueDto } from '../dto/create-queue.dto';
 import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
 import { AlreadyExistsError } from '../../structures/Errors/AlreadyExistsError';
-import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
+import { InstaceConsumer } from '../../consumer/dto/instance-consumer.dto';
 
 export class FanoutQueue implements IQueue {
   consumers: InstanceConsumerCollection;

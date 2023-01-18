@@ -6,11 +6,11 @@ import { UpdateConsumerDto } from './dto/update-consumer.dto';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { InstanceConsumerCollection, InstanceMessage } from 'src/Types';
 import { InstaceConsumer } from './dto/instance-consumer.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { AlreadyExistsError } from 'src/structures/Errors/AlreadyExistsError';
+import { AlreadyExistsError } from '../structures/Errors/AlreadyExistsError';
 
 @Injectable()
 export class ConsumerService {

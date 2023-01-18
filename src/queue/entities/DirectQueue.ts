@@ -1,7 +1,7 @@
 import { IQueue } from './IQueue';
 import { ConsumerNotFoundError } from '../../structures/Errors/ConsumerNotFoundError';
 import { InstanceConsumerCollection } from '../../Types';
-import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
+import { InstaceConsumer } from '../../consumer/dto/instance-consumer.dto';
 
 export class DirectQueue implements IQueue {
   consumers: InstanceConsumerCollection;

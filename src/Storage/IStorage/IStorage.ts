@@ -1,5 +1,5 @@
 import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
-import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
+import { CreateQueueDto } from '../../queue/dto/create-queue.dto';
 import {
   ConsumerCollection,
   Message,

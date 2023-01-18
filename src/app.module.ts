@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConsumerModule } from './consumer/consumer.module';
 import { ConfigModule } from '@nestjs/config';
-import { ProducerModule } from './producer/producer.module';
 import configuration from './config/configuration';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    ConsumerModule,
-    ProducerModule,
+    DatabaseModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],

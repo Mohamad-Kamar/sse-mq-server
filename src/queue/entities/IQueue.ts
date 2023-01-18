@@ -1,4 +1,4 @@
-import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
+import { InstaceConsumer } from '../../consumer/dto/instance-consumer.dto';
 import { InstanceConsumerCollection } from '../../Types';
 
 export interface IQueue {

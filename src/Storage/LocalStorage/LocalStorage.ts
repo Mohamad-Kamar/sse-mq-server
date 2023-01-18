@@ -1,5 +1,5 @@
-import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
-import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
+import { CreateConsumerDto } from '../../consumer/dto/create-consumer.dto';
+import { CreateQueueDto } from '../../queue/dto/create-queue.dto';
 import { IStorage } from '../IStorage/IStorage';
 import {
   ConsumerCollection,

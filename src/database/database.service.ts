@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreateConsumerDto } from 'src/consumer/dto/create-consumer.dto';
-import { InstaceConsumer } from 'src/consumer/dto/instance-consumer.dto';
-import { CreateQueueDto } from 'src/queue/dto/create-queue.dto';
-import { IQueue } from 'src/queue/entities/IQueue';
-import { QueueFactory } from 'src/queue/entities/QueueFactory';
-import { IStorage } from 'src/Storage/IStorage/IStorage';
+import { CreateConsumerDto } from '../consumer/dto/create-consumer.dto';
+import { InstaceConsumer } from '../consumer/dto/instance-consumer.dto';
+import { CreateQueueDto } from '../queue/dto/create-queue.dto';
+import { IQueue } from '../queue/entities/IQueue';
+import { QueueFactory } from '../queue/entities/QueueFactory';
+import { IStorage } from '../Storage/IStorage/IStorage';
 import {
   ConsumerCollection,
   Message,
   MessageCollection,
   QueueCollection,
-} from 'src/Storage/IStorage/IStorage_Types';
-import { LocalStorage } from 'src/Storage/LocalStorage/LocalStorage';
+} from '../Storage/IStorage/IStorage_Types';
+import { LocalStorage } from '../Storage/LocalStorage/LocalStorage';
 import {
   InstanceConsumerCollection,
   InstanceMessage,

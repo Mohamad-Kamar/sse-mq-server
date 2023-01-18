@@ -4,7 +4,7 @@ import { QueueController } from './queue.controller';
 import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [],
   controllers: [QueueController],
   providers: [QueueService],
   exports: [QueueService],

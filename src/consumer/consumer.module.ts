@@ -4,7 +4,7 @@ import { ConsumerController } from './consumer.controller';
 import { QueueModule } from '../queue/queue.module';
 
 @Module({
-  imports: [QueueModule],
+  imports: [],
   controllers: [ConsumerController],
   providers: [ConsumerService],
 })
