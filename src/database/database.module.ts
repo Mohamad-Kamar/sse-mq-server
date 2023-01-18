@@ -5,7 +5,6 @@ import { DatabaseController } from './database.controller';
 @Global()
 @Module({
   controllers: [DatabaseController],
-  exports: [DatabaseService],
   providers: [DatabaseService],
 })
 export class DatabaseModule {}

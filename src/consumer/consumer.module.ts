@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConsumerService } from './consumer.service';
 import { ConsumerController } from './consumer.controller';
-import { QueueModule } from '../queue/queue.module';
 
 @Module({
-  imports: [],
   controllers: [ConsumerController],
   providers: [ConsumerService],
 })

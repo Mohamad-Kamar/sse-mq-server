@@ -4,7 +4,6 @@ import { ProducerController } from './producer.controller';
 
 @Module({
   controllers: [ProducerController],
-  imports: [],
   providers: [ProducerService],
 })
 export class ProducerModule {}
