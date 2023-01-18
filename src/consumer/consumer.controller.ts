@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Sse, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Sse,
+  Query,
+  Delete,
+} from '@nestjs/common';
 import { MessageEvent } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
@@ -27,5 +36,10 @@ export class ConsumerController {
   @Get(':consumerID')
   findOne(@Param('consumerID') consumerID: string) {
     return this.consumerService.findOne(consumerID);
+  }
+
+  @Delete()
+  deleteOne(@Query() query: CreateConsumerDto) {
+    return this.consumerService.delete(query);
   }
 }

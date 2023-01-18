@@ -2,7 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, map, tap } from 'rxjs';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
-import { UpdateConsumerDto } from './dto/update-consumer.dto';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
@@ -34,6 +33,7 @@ export class ConsumerService {
         this.databaseService.removeMessage(instanceMessage);
       }),
       map((instanceMessage: InstanceMessage) => {
+        console.log({ messageEvent: instanceMessage.messageEvent.data });
         return instanceMessage.messageEvent;
       }),
     );
@@ -45,6 +45,7 @@ export class ConsumerService {
 
     const assocQueue = this.databaseService.getQueue(queueKey);
     if (!assocQueue) {
+      console.log('QUEUE NOT FOUND');
       throw new QueueNotFoundError();
     }
 
@@ -75,5 +76,13 @@ export class ConsumerService {
 
   findAll() {
     return this.consumers;
+  }
+
+  delete(consumer: CreateConsumerDto) {
+    const { queueKey, consumerID } = consumer;
+    this.databaseService.deleteConsumer(consumerID);
+    const assocQueue = this.databaseService.getQueue(queueKey);
+    assocQueue.deleteConsumer(consumerID);
+    delete this.consumers[consumer.consumerID];
   }
 }
