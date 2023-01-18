@@ -1,13 +1,13 @@
 /* eslint-disable prefer-const */
 import { Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
 import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
 import { DatabaseService } from 'src/database/database.service';
-import { InstanceConsumerCollection } from 'src/Types';
+import { InstanceConsumerCollection, InstanceMessage } from 'src/Types';
 import { InstaceConsumer } from './dto/instance-consumer.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { AlreadyExistsError } from 'src/structures/Errors/AlreadyExistsError';
@@ -28,7 +28,15 @@ export class ConsumerService {
       this.create(connectToQueueDto);
       targetConsumer = this.findOne(consumerID);
     }
-    return targetConsumer.consumerSubject;
+    return targetConsumer.consumerSubject.pipe(
+      tap((instanceMessage: InstanceMessage) => {
+        this.databaseService.deleteMessage(instanceMessage);
+        this.databaseService.removeMessage(instanceMessage);
+      }),
+      map((instanceMessage: InstanceMessage) => {
+        return instanceMessage.messageEvent;
+      }),
+    );
   }
 
   create(createConsumerDto: CreateConsumerDto): CreateConsumerDto {

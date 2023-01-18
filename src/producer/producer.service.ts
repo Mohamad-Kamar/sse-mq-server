@@ -35,7 +35,7 @@ export class ProducerService {
       this.databaseService.saveMessage(storedMessage);
 
       this.databaseService.addMessage(instanceMessage);
-      consumer.consumerSubject.next(messageEvent);
+      consumer.consumerSubject.next(instanceMessage);
     });
   }
 }
