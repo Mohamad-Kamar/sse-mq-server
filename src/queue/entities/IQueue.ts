@@ -8,5 +8,6 @@ export interface IQueue {
   getConsumers(): InstanceConsumerCollection;
   addConsumer(instanceConsumer: InstaceConsumer): void;
   getConsumer(consumerID: string): InstaceConsumer;
+  deleteConsumer(consumerID: string): void;
   getPublishingConsumers(): InstaceConsumer[];
 }

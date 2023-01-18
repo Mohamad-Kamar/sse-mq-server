@@ -31,12 +31,16 @@ export class RoundRobinQueue implements IQueue {
     return this.consumers[consumerID];
   }
 
+  deleteConsumer(consumerID: string) {
+    delete this.consumers[consumerID];
+  }
+
   getPublishingConsumers(): InstaceConsumer[] {
     const currentKeys = Object.keys(this.consumers);
     this.currentIndex = this.currentIndex % currentKeys.length;
     const targetID = currentKeys[this.currentIndex];
     const targetConsumer = this.consumers[targetID];
-    if (!targetConsumer) [];
+    if (!targetConsumer) return [];
     this.currentIndex = (this.currentIndex + 1) % currentKeys.length;
     return [targetConsumer];
   }

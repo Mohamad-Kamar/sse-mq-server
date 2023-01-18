@@ -27,6 +27,10 @@ export class FanoutQueue implements IQueue {
     return this.consumers[consumerID];
   }
 
+  deleteConsumer(consumerID: string) {
+    delete this.consumers[consumerID];
+  }
+
   getPublishingConsumers(): InstaceConsumer[] {
     return Object.values(this.consumers);
   }

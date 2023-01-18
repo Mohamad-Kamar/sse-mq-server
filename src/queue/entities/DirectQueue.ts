@@ -27,6 +27,10 @@ export class DirectQueue implements IQueue {
     return this.consumers[consumerID];
   }
 
+  deleteConsumer(consumerID: string) {
+    delete this.consumers[consumerID];
+  }
+
   getPublishingConsumers(): InstaceConsumer[] {
     if (!this.currentConsumerID) return [];
     return [this.consumers[this.currentConsumerID]];

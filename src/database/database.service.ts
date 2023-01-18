@@ -105,33 +105,6 @@ export class DatabaseService {
     return this.messages;
   }
 
-  getConsumer(consumerID: string): InstaceConsumer {
-    return this.consumers[consumerID];
-  }
-  getConsumers() {
-    return this.consumers;
-  }
-
-  getQueue(queueKey: string): IQueue {
-    return this.queues[queueKey];
-  }
-  getQueues() {
-    return this.queues;
-  }
-
-  saveConsumer(createConsumerDto: CreateConsumerDto) {
-    this.storage.createConsumer(createConsumerDto);
-  }
-
-  saveQueue(queueDetails: CreateQueueDto): boolean {
-    this.storage.createQueue(queueDetails);
-    return true;
-  }
-
-  deleteQueue(queueKey: string) {
-    this.storage.deleteQueue(queueKey);
-  }
-
   deleteMessage(instanceMessage: InstanceMessage) {
     this.storage.deleteMessage(instanceMessage.consumerID);
   }
@@ -144,11 +117,41 @@ export class DatabaseService {
 
   addMessage(instanceMessage: InstanceMessage) {
     const consumer = this.getConsumer(instanceMessage.consumerID);
+    if (!consumer) return;
     consumer.addMessage(instanceMessage);
     this.messages[instanceMessage.messageID] = instanceMessage;
   }
 
   saveMessage(messageBody: Message) {
     this.storage.createMessage(messageBody);
+  }
+
+  getConsumer(consumerID: string): InstaceConsumer {
+    return this.consumers[consumerID];
+  }
+  getConsumers() {
+    return this.consumers;
+  }
+  deleteConsumer(consumerID: string) {
+    this.storage.deleteConsumer(consumerID);
+  }
+  saveConsumer(createConsumerDto: CreateConsumerDto) {
+    this.storage.createConsumer(createConsumerDto);
+  }
+
+  getQueue(queueKey: string): IQueue {
+    return this.queues[queueKey];
+  }
+  getQueues() {
+    return this.queues;
+  }
+
+  saveQueue(queueDetails: CreateQueueDto): boolean {
+    this.storage.createQueue(queueDetails);
+    return true;
+  }
+
+  deleteQueue(queueKey: string) {
+    this.storage.deleteQueue(queueKey);
   }
 }
