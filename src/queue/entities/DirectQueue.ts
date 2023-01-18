@@ -19,6 +19,7 @@ export class DirectQueue implements IQueue {
   }
 
   addConsumer(instanceConsumer: InstaceConsumer): void {
+    this.currentConsumerID = instanceConsumer.consumerID;
     this.consumers[instanceConsumer.consumerID] = instanceConsumer;
   }
 
