@@ -60,6 +60,8 @@ export class ConsumerService {
     assocQueue.addConsumer(consumerInstace);
     this.addConsumer(consumerInstace);
     console.log('CREATED Consumer');
+    console.log({ createConsumerDto });
+    console.log({ consumerInstace });
     return createConsumerDto;
   }
 

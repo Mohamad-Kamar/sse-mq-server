@@ -14,7 +14,7 @@ export class ConsumerController {
     return this.consumerService.connect(query);
   }
 
-  @Post('create')
+  @Post()
   create(@Body() consumerDetails: CreateConsumerDto) {
     return this.consumerService.create(consumerDetails);
   }
@@ -27,10 +27,5 @@ export class ConsumerController {
   @Get(':consumerID')
   findOne(@Param('consumerID') consumerID: string) {
     return this.consumerService.findOne(consumerID);
-  }
-
-  @Get('healthcheck')
-  healthcheck() {
-    return 200;
   }
 }
