@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { ProducerMessage } from '../globalTypes/PublisherMessage';
+import { ProducerMessage } from '../globalTypes/ProducerMessage';
 import { ProducerService } from './producer.service';
 
 @Controller('producer')

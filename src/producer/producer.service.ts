@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { InstanceMessage } from 'src/Types';
-import { ProducerMessage } from '../globalTypes/PublisherMessage';
+import { ProducerMessage } from '../globalTypes/ProducerMessage';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from '../Storage/IStorage/IStorage_Types';
