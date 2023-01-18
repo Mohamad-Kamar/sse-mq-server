@@ -53,4 +53,9 @@ export class LocalStorage implements IStorage {
     delete this.queues[queueKey];
     return true;
   }
+
+  deleteMessage(messageID: string) {
+    delete this.messages[messageID];
+    return true;
+  }
 }

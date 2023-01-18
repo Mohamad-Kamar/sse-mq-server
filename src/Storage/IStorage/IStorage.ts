@@ -16,4 +16,5 @@ export interface IStorage {
   createConsumer(consumerDetails: CreateConsumerDto): boolean;
   createMessage(messageDetails: Message): boolean;
   deleteQueue(queueKey: string): boolean;
+  deleteMessage(messageID: string): boolean;
 }

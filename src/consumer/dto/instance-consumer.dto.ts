@@ -5,7 +5,7 @@ export class InstaceConsumer {
   queueKey: string;
   consumerID: string;
   messages: InstanceMessageCollection;
-  consumerSubject: ReplaySubject<MessageEvent<string>>;
+  consumerSubject: ReplaySubject<InstanceMessage>;
   constructor(
     queueKey: string,
     consumerID: string,
@@ -14,7 +14,7 @@ export class InstaceConsumer {
     this.queueKey = queueKey;
     this.consumerID = consumerID;
     this.messages = messages;
-    this.consumerSubject = new ReplaySubject<MessageEvent>();
+    this.consumerSubject = new ReplaySubject<InstanceMessage>();
   }
 
   getMessages() {
@@ -23,5 +23,9 @@ export class InstaceConsumer {
 
   addMessage(message: InstanceMessage) {
     this.messages[message.messageID] = message;
+  }
+
+  deleteMessage(messageID: string) {
+    delete this.messages[messageID];
   }
 }

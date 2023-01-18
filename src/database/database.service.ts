@@ -32,10 +32,6 @@ export class DatabaseService {
     this.loadStorage();
   }
 
-  getQueue(queueKey: string): IQueue {
-    return this.queues[queueKey];
-  }
-
   reset() {
     this.messages = {};
     this.consumers = {};
@@ -108,8 +104,16 @@ export class DatabaseService {
   getMessages() {
     return this.messages;
   }
+
+  getConsumer(consumerID: string): InstaceConsumer {
+    return this.consumers[consumerID];
+  }
   getConsumers() {
     return this.consumers;
+  }
+
+  getQueue(queueKey: string): IQueue {
+    return this.queues[queueKey];
   }
   getQueues() {
     return this.queues;
@@ -128,7 +132,19 @@ export class DatabaseService {
     this.storage.deleteQueue(queueKey);
   }
 
+  deleteMessage(instanceMessage: InstanceMessage) {
+    this.storage.deleteMessage(instanceMessage.consumerID);
+  }
+
+  removeMessage(instanceMessage: InstanceMessage) {
+    const consumer = this.getConsumer(instanceMessage.consumerID);
+    consumer.deleteMessage(instanceMessage.consumerID);
+    delete this.messages[instanceMessage.consumerID];
+  }
+
   addMessage(instanceMessage: InstanceMessage) {
+    const consumer = this.getConsumer(instanceMessage.consumerID);
+    consumer.addMessage(instanceMessage);
     this.messages[instanceMessage.messageID] = instanceMessage;
   }
 
