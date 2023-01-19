@@ -20,15 +20,16 @@ export class ProducerService {
     assocQueue.getPublishingConsumers().forEach((consumer) => {
       const messageEvent = new MessageEvent('message', { data: message });
       const durable = producerMessage.durable || false;
+      const messageID = uuidv4();
       const instanceMessage: InstanceMessage = {
         messageEvent,
-        messageID: uuidv4(),
+        messageID,
         consumerID: consumer.consumerID,
         durable,
       };
       const storedMessage: Message = {
         messageContent: message,
-        messageID: uuidv4(),
+        messageID,
         consumerID: consumer.consumerID,
         durable,
       };

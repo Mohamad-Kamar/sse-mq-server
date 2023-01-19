@@ -27,13 +27,14 @@ export class ConsumerService {
       this.create(connectToQueueDto);
       targetConsumer = this.findOne(consumerID);
     }
+
     return targetConsumer.consumerSubject.pipe(
       tap((instanceMessage: InstanceMessage) => {
+        console.log(instanceMessage.messageID);
         this.databaseService.deleteMessage(instanceMessage);
         this.databaseService.removeMessage(instanceMessage);
       }),
       map((instanceMessage: InstanceMessage) => {
-        console.log({ messageEvent: instanceMessage.messageEvent.data });
         return instanceMessage.messageEvent;
       }),
     );
