@@ -106,13 +106,13 @@ export class DatabaseService {
   }
 
   deleteMessage(instanceMessage: InstanceMessage) {
-    this.storage.deleteMessage(instanceMessage.consumerID);
+    this.storage.deleteMessage(instanceMessage.messageID);
   }
 
   removeMessage(instanceMessage: InstanceMessage) {
     const consumer = this.getConsumer(instanceMessage.consumerID);
-    consumer.deleteMessage(instanceMessage.consumerID);
-    delete this.messages[instanceMessage.consumerID];
+    consumer.deleteMessage(instanceMessage.messageID);
+    delete this.messages[instanceMessage.messageID];
   }
 
   addMessage(instanceMessage: InstanceMessage) {
@@ -125,7 +125,9 @@ export class DatabaseService {
   saveMessage(messageBody: Message) {
     this.storage.createMessage(messageBody);
   }
-
+  retrieveMessages() {
+    return this.storage.getMessages();
+  }
   getConsumer(consumerID: string): InstaceConsumer {
     return this.consumers[consumerID];
   }
@@ -138,19 +140,22 @@ export class DatabaseService {
   saveConsumer(createConsumerDto: CreateConsumerDto) {
     this.storage.createConsumer(createConsumerDto);
   }
-
+  retrieveConsumers() {
+    return this.storage.getConsumers();
+  }
   getQueue(queueKey: string): IQueue {
     return this.queues[queueKey];
   }
   getQueues() {
     return this.queues;
   }
-
+  retrieveQueues() {
+    return this.storage.getQueues();
+  }
   saveQueue(queueDetails: CreateQueueDto): boolean {
     this.storage.createQueue(queueDetails);
     return true;
   }
-
   deleteQueue(queueKey: string) {
     this.storage.deleteQueue(queueKey);
   }

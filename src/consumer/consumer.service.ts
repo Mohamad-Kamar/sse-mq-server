@@ -78,6 +78,13 @@ export class ConsumerService {
     return this.consumers;
   }
 
+  retrieveAll() {
+    return this.databaseService.retrieveConsumers();
+  }
+  retrieveAllMessages() {
+    return this.databaseService.retrieveMessages();
+  }
+
   delete(consumer: CreateConsumerDto) {
     const { queueKey, consumerID } = consumer;
     this.databaseService.deleteConsumer(consumerID);

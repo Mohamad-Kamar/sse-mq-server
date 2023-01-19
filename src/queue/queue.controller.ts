@@ -10,6 +10,7 @@ import {
 import { QueueService } from './queue.service';
 import { CreateQueueDto } from './dto/create-queue.dto';
 import { UpdateQueueDto } from './dto/update-queue.dto';
+import { QueueCollection } from 'src/Storage/IStorage/IStorage_Types';
 
 @Controller('queue')
 export class QueueController {
@@ -21,8 +22,8 @@ export class QueueController {
   }
 
   @Get()
-  findAll() {
-    return this.queueService.findAll();
+  findAll(): QueueCollection {
+    return this.queueService.retrieveAll();
   }
 
   @Get(':queueKey')

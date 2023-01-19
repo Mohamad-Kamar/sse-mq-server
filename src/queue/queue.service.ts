@@ -45,6 +45,10 @@ export class QueueService {
     return this.queues;
   }
 
+  retrieveAll() {
+    return this.databaseService.retrieveQueues();
+  }
+
   findOne(queueKey: string) {
     return this.queues[queueKey];
   }

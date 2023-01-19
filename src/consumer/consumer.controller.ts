@@ -10,6 +10,10 @@ import {
 } from '@nestjs/common';
 import { MessageEvent } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import {
+  ConsumerCollection,
+  MessageCollection,
+} from 'src/Storage/IStorage/IStorage_Types';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
 import { ConsumerService } from './consumer.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
@@ -29,13 +33,18 @@ export class ConsumerController {
   }
 
   @Get()
-  findAll() {
-    return this.consumerService.findAll();
+  findAll(): ConsumerCollection {
+    return this.consumerService.retrieveAll();
   }
 
-  @Get(':consumerID')
-  findOne(@Param('consumerID') consumerID: string) {
+  @Get()
+  findOne(@Query() consumerID: string) {
     return this.consumerService.findOne(consumerID);
+  }
+
+  @Get('message')
+  findAllMessages(): MessageCollection {
+    return this.consumerService.retrieveAllMessages();
   }
 
   @Delete()
