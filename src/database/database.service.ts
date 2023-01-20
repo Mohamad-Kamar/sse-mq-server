@@ -27,7 +27,6 @@ export class DatabaseService {
   queues: InstanceQueueCollection;
 
   constructor() {
-    console.log('LOADING DATABASE SERVICE');
     this.storage = new LocalStorage();
     this.loadStorage();
   }

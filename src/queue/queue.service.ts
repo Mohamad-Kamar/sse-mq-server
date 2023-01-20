@@ -31,9 +31,6 @@ export class QueueService {
 
     const queueInstance: IQueue = QueueFactory.createQueue(createQueueDto);
     this.addQueue(queueInstance);
-    console.log('CREATED QUEUE');
-    console.log({ createQueueDto });
-    console.log({ queueInstance });
     return createQueueDto;
   }
 

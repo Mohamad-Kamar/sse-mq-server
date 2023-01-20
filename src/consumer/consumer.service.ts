@@ -30,7 +30,6 @@ export class ConsumerService {
 
     return targetConsumer.consumerSubject.pipe(
       tap((instanceMessage: InstanceMessage) => {
-        console.log(instanceMessage.messageID);
         this.databaseService.deleteMessage(instanceMessage);
         this.databaseService.removeMessage(instanceMessage);
       }),
@@ -46,7 +45,6 @@ export class ConsumerService {
 
     const assocQueue = this.databaseService.getQueue(queueKey);
     if (!assocQueue) {
-      console.log('QUEUE NOT FOUND');
       throw new QueueNotFoundError();
     }
 
@@ -61,9 +59,6 @@ export class ConsumerService {
     );
     assocQueue.addConsumer(consumerInstace);
     this.addConsumer(consumerInstace);
-    console.log('CREATED Consumer');
-    console.log({ createConsumerDto });
-    console.log({ consumerInstace });
     return createConsumerDto;
   }
 
