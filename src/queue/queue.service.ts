@@ -55,7 +55,6 @@ export class QueueService {
   }
 
   remove(queueKey: string) {
-    delete this.queues[queueKey];
     this.databaseService.deleteQueue(queueKey);
   }
 }

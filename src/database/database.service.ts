@@ -156,6 +156,13 @@ export class DatabaseService {
     return true;
   }
   deleteQueue(queueKey: string) {
+    const currQueue = this.queues[queueKey];
+    const currQueueConsumerIDs = Object.keys(currQueue.consumers);
+    currQueueConsumerIDs.forEach((id) => {
+      this.deleteConsumer(id);
+      currQueue.deleteConsumer(id);
+    });
+    delete this.queues[queueKey];
     this.storage.deleteQueue(queueKey);
   }
 }

@@ -85,7 +85,7 @@ export class ConsumerService {
     const { queueKey, consumerID } = consumer;
     this.databaseService.deleteConsumer(consumerID);
     const assocQueue = this.databaseService.getQueue(queueKey);
-    assocQueue.deleteConsumer(consumerID);
+    if (assocQueue) assocQueue.deleteConsumer(consumerID);
     delete this.consumers[consumer.consumerID];
   }
 }
