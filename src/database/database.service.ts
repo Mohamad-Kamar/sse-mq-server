@@ -40,13 +40,13 @@ export class DatabaseService {
 
   async loadStorage() {
     await this.storage.initialize();
-    const storedMessages = this.storage.getMessages();
+    const storedMessages = await this.storage.getMessages();
     this.messages = this.structureMessages(storedMessages);
 
-    const storedConsumers = this.storage.getConsumers();
+    const storedConsumers = await this.storage.getConsumers();
     this.consumers = this.structureConsumers(storedConsumers);
 
-    const storedQueues = this.storage.getQueues();
+    const storedQueues = await this.storage.getQueues();
     this.queues = this.structureQueues(storedQueues);
   }
 

@@ -8,15 +8,17 @@ import {
 } from './IStorage_Types';
 
 export interface IStorage {
-  initialize(): Promise<void>;
-  reset(): boolean;
-  getQueues(): QueueCollection;
-  getConsumers(): ConsumerCollection;
-  getMessages(): MessageCollection;
-  createQueue(queueDetails: CreateQueueDto): boolean;
-  createConsumer(consumerDetails: CreateConsumerDto): boolean;
-  createMessage(messageDetails: Message): boolean;
-  deleteConsumer(consumerID: string): boolean;
-  deleteQueue(queueKey: string): boolean;
-  deleteMessage(messageID: string): boolean;
+  initialize(): void | Promise<void>;
+  reset(): boolean | Promise<boolean>;
+  getQueues(): QueueCollection | Promise<QueueCollection>;
+  getConsumers(): ConsumerCollection | Promise<ConsumerCollection>;
+  getMessages(): MessageCollection | Promise<MessageCollection>;
+  createQueue(queueDetails: CreateQueueDto): boolean | Promise<boolean>;
+  createConsumer(
+    consumerDetails: CreateConsumerDto,
+  ): boolean | Promise<boolean>;
+  createMessage(messageDetails: Message): boolean | Promise<boolean>;
+  deleteConsumer(consumerID: string): boolean | Promise<boolean>;
+  deleteQueue(queueKey: string): boolean | Promise<boolean>;
+  deleteMessage(messageID: string): boolean | Promise<boolean>;
 }
