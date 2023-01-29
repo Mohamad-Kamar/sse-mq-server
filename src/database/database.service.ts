@@ -38,7 +38,8 @@ export class DatabaseService {
     this.storage.reset();
   }
 
-  loadStorage() {
+  async loadStorage() {
+    await this.storage.initialize();
     const storedMessages = this.storage.getMessages();
     this.messages = this.structureMessages(storedMessages);
 

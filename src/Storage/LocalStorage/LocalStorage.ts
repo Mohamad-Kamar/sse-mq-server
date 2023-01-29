@@ -12,11 +12,16 @@ export class LocalStorage implements IStorage {
   queues: QueueCollection;
   consumers: ConsumerCollection;
   messages: MessageCollection;
-  constructor(queues = {}, consumers = {}, messages = {}) {
+  constructor() {
+    this.initialize();
+  }
+
+  async initialize(queues = {}, consumers = {}, messages = {}): Promise<void> {
     this.queues = queues;
     this.consumers = consumers;
     this.messages = messages;
   }
+
   reset(): boolean {
     this.queues = {};
     this.consumers = {};

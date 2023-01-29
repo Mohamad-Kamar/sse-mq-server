@@ -8,6 +8,7 @@ import {
 } from './IStorage_Types';
 
 export interface IStorage {
+  initialize(): Promise<void>;
   reset(): boolean;
   getQueues(): QueueCollection;
   getConsumers(): ConsumerCollection;
