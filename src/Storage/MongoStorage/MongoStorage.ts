@@ -12,23 +12,24 @@ import {
   formatToConsumerCollection,
   formatToMessageCollection,
   formatToQueueCollection,
-} from 'src/utils/formatToCollection';
-
-const clusterName = process.env.MONGODB_USERNAME;
-const clusterPassword = process.env.MONGODB_PASSWORD;
-
-const uri = `mongodb+srv://${clusterName}:${clusterPassword}@cluster0.a0ik0dk.mongodb.net/?retryWrites=true&w=majority`;
-const dbName = 'sse-mq';
+} from '../../utils/formatToCollection';
+import { ConfigModule } from '@nestjs/config';
 
 export class MongoStorage implements IStorage {
   queues: Collection;
   consumers: Collection;
   messages: Collection;
-  client = new MongoClient(uri, {
-    serverApi: ServerApiVersion.v1,
-  });
-
+  client: MongoClient;
   async initialize(): Promise<void> {
+    await ConfigModule.envVariablesLoaded;
+    const clusterName = process.env.MONGODB_USERNAME;
+    const clusterPassword = process.env.MONGODB_PASSWORD;
+    const uri = `mongodb+srv://${clusterName}:${clusterPassword}@cluster0.a0ik0dk.mongodb.net/?retryWrites=true&w=majority`;
+    const dbName = 'sse-mq';
+    this.client = new MongoClient(uri, {
+      serverApi: ServerApiVersion.v1,
+    });
+
     await this.client.connect();
     const db = this.client.db(dbName);
     this.queues = db.collection('queues');
@@ -94,7 +95,6 @@ export class MongoStorage implements IStorage {
   async createQueue(queueDetails: CreateQueueDto): Promise<boolean> {
     try {
       await this.queues.insertOne({
-        _id: new ObjectId(queueDetails.queueKey),
         ...queueDetails,
       });
       return true;
@@ -107,7 +107,6 @@ export class MongoStorage implements IStorage {
   async createConsumer(consumerDetails: CreateConsumerDto): Promise<boolean> {
     try {
       await this.consumers.insertOne({
-        _id: new ObjectId(consumerDetails.consumerID),
         ...consumerDetails,
       });
       return true;
@@ -120,7 +119,6 @@ export class MongoStorage implements IStorage {
   async createMessage(messageDetails: Message): Promise<boolean> {
     try {
       await this.consumers.insertOne({
-        _id: new ObjectId(messageDetails.messageID),
         ...messageDetails,
       });
       return true;
