@@ -23,7 +23,12 @@ import { ProducerModule } from './producer/producer.module';
       cache: true,
     }),
   ],
-  controllers: [AppController, QueueController, ConsumerController, ProducerController],
+  controllers: [
+    AppController,
+    QueueController,
+    ConsumerController,
+    ProducerController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}
