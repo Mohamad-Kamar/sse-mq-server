@@ -11,6 +11,7 @@ export const formatToQueueCollection = (dataAsArray: Array<CreateQueueDto>) => {
   const formattedCollection: QueueCollection = {};
   dataAsArray.forEach((element: CreateQueueDto) => {
     const elementKey = element['queueKey'];
+    if (!elementKey) return;
     formattedCollection[elementKey] = element;
   });
   return formattedCollection;
@@ -22,6 +23,7 @@ export const formatToConsumerCollection = (
   const formattedCollection: ConsumerCollection = {};
   dataAsArray.forEach((element: CreateConsumerDto) => {
     const elementKey = element['consumerID'];
+    if (!elementKey) return;
     formattedCollection[elementKey] = element;
   });
   return formattedCollection;
@@ -31,6 +33,7 @@ export const formatToMessageCollection = (dataAsArray: Array<Message>) => {
   const formattedCollection: MessageCollection = {};
   dataAsArray.forEach((element: Message) => {
     const elementKey = element['messageID'];
+    if (!elementKey) return;
     formattedCollection[elementKey] = element;
   });
   return formattedCollection;
