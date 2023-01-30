@@ -7,7 +7,7 @@ import {
   MessageCollection,
   QueueCollection,
 } from '../IStorage/IStorage_Types';
-import { MongoClient, ServerApiVersion, Collection, ObjectId } from 'mongodb';
+import { MongoClient, ServerApiVersion, Collection } from 'mongodb';
 import {
   formatToConsumerCollection,
   formatToMessageCollection,
@@ -64,7 +64,7 @@ export class MongoStorage implements IStorage {
   }
 
   async getConsumers(): Promise<ConsumerCollection> {
-    const dbConsumers = await this.queues.find({}).toArray();
+    const dbConsumers = await this.consumers.find({}).toArray();
     const formattedConsumers = formatToConsumerCollection(
       dbConsumers.map((value): CreateConsumerDto => {
         return {
@@ -78,7 +78,7 @@ export class MongoStorage implements IStorage {
   }
 
   async getMessages(): Promise<MessageCollection> {
-    const dbMessages = await this.queues.find({}).toArray();
+    const dbMessages = await this.messages.find({}).toArray();
     const formattedMessages = formatToMessageCollection(
       dbMessages.map((value): Message => {
         return {
@@ -118,7 +118,7 @@ export class MongoStorage implements IStorage {
 
   async createMessage(messageDetails: Message): Promise<boolean> {
     try {
-      await this.consumers.insertOne({
+      await this.messages.insertOne({
         ...messageDetails,
       });
       return true;

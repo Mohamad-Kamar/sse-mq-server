@@ -19,6 +19,7 @@ import {
   InstanceMessageCollection,
   InstanceQueueCollection,
 } from '../Types';
+import { ConfigModule } from '@nestjs/config';
 
 @Injectable()
 export class DatabaseService {
@@ -26,10 +27,6 @@ export class DatabaseService {
   messages: InstanceMessageCollection;
   consumers: InstanceConsumerCollection;
   queues: InstanceQueueCollection;
-
-  constructor() {
-    this.storage = new MongoStorage();
-  }
 
   reset() {
     this.messages = {};
@@ -39,6 +36,11 @@ export class DatabaseService {
   }
 
   async loadStorage() {
+    await ConfigModule.envVariablesLoaded;
+    const storageType = process.env.STORAGE_TYPE || 'local';
+    this.storage =
+      storageType === 'mongodb' ? new MongoStorage() : new LocalStorage();
+
     await this.storage.initialize();
     const storedMessages = await this.storage.getMessages();
     this.messages = this.structureMessages(storedMessages);
