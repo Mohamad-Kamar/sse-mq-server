@@ -130,7 +130,7 @@ export class MongoStorage implements IStorage {
 
   async deleteMessage(messageID: string): Promise<boolean> {
     try {
-      this.messages.deleteOne({ _id: messageID });
+      this.messages.deleteOne({ messageID });
       return true;
     } catch (error) {
       console.log(error);
@@ -140,7 +140,7 @@ export class MongoStorage implements IStorage {
 
   async deleteConsumer(consumerID: string): Promise<boolean> {
     try {
-      this.consumers.deleteOne({ _id: consumerID });
+      this.consumers.deleteOne({ consumerID });
       return true;
     } catch (error) {
       console.log(error);
@@ -150,7 +150,7 @@ export class MongoStorage implements IStorage {
 
   async deleteQueue(queueKey: string): Promise<boolean> {
     try {
-      this.queues.deleteOne({ _id: queueKey });
+      this.queues.deleteOne({ queueKey });
       return true;
     } catch (error) {
       console.log(error);

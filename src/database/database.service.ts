@@ -82,7 +82,9 @@ export class DatabaseService {
 
     // Add Message collections to consumers
     Object.values(this.messages).forEach((instanceMessage) => {
-      instanceConsumers[instanceMessage.consumerID].addMessage(instanceMessage);
+      const consumer = instanceConsumers[instanceMessage.consumerID];
+      if (consumer) consumer.addMessage(instanceMessage);
+      else this.storage.deleteMessage(instanceMessage.messageID);
     });
 
     return instanceConsumers;
@@ -97,7 +99,7 @@ export class DatabaseService {
 
     // Add consumer collections to queues
     Object.values(this.consumers).forEach((instanceConsumer) => {
-      instanceQueues[instanceConsumer.consumerID].addConsumer(instanceConsumer);
+      instanceQueues[instanceConsumer.queueKey].addConsumer(instanceConsumer);
     });
 
     return instanceQueues;
