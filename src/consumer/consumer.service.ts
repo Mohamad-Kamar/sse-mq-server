@@ -74,7 +74,7 @@ export class ConsumerService {
     return this.consumers;
   }
 
-  retrieveAll() {
+  async retrieveAll() {
     return this.databaseService.retrieveConsumers();
   }
   retrieveAllMessages() {

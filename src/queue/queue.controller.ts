@@ -22,7 +22,7 @@ export class QueueController {
   }
 
   @Get()
-  findAll(): QueueCollection {
+  findAll(): QueueCollection | Promise<QueueCollection> {
     return this.queueService.retrieveAll();
   }
 

@@ -33,7 +33,7 @@ export class ConsumerController {
   }
 
   @Get()
-  findAll(): ConsumerCollection {
+  findAll(): ConsumerCollection | Promise<ConsumerCollection> {
     return this.consumerService.retrieveAll();
   }
 
@@ -43,7 +43,7 @@ export class ConsumerController {
   }
 
   @Get('message')
-  findAllMessages(): MessageCollection {
+  findAllMessages(): MessageCollection | Promise<MessageCollection> {
     return this.consumerService.retrieveAllMessages();
   }
 
