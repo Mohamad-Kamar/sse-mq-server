@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { MongoStorage } from '../Storage/MongoStorage/MongoStorage';
 import { CreateConsumerDto } from '../consumer/dto/create-consumer.dto';
 import { InstaceConsumer } from '../consumer/dto/instance-consumer.dto';
 import { CreateQueueDto } from '../queue/dto/create-queue.dto';
@@ -27,8 +28,7 @@ export class DatabaseService {
   queues: InstanceQueueCollection;
 
   constructor() {
-    this.storage = new LocalStorage();
-    this.loadStorage();
+    this.storage = new MongoStorage();
   }
 
   reset() {
