@@ -30,6 +30,7 @@ export class ConsumerService {
 
     return targetConsumer.consumerSubject.pipe(
       tap((instanceMessage: InstanceMessage) => {
+        if (instanceMessage.durable) return;
         this.databaseService.deleteMessage(instanceMessage);
         this.databaseService.removeMessage(instanceMessage);
       }),
