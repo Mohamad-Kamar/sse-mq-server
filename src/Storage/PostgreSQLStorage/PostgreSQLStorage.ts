@@ -36,22 +36,41 @@ export class PostgreSQLStorage implements IStorage {
   }
 
   async getQueues(): Promise<QueueCollection> {
-    const { rows } = await this.client.query<CreateQueueDto>(
-      'SELECT * FROM queues',
+    const { rows } = await this.client.query('SELECT * FROM queues');
+    return formatToQueueCollection(
+      rows.map(
+        (row): CreateQueueDto => ({
+          queueKey: row.queue_key,
+          queueType: row.queue_type,
+        }),
+      ),
     );
-    return formatToQueueCollection(rows);
   }
 
   async getConsumers(): Promise<ConsumerCollection> {
-    const { rows } = await this.client.query<CreateConsumerDto>(
-      'SELECT * FROM consumers',
+    const { rows } = await this.client.query('SELECT * FROM consumers');
+    return formatToConsumerCollection(
+      rows.map(
+        (row): CreateConsumerDto => ({
+          queueKey: row.queue_key,
+          consumerID: row.consumer_id,
+        }),
+      ),
     );
-    return formatToConsumerCollection(rows);
   }
 
   async getMessages(): Promise<MessageCollection> {
-    const { rows } = await this.client.query<Message>('SELECT * FROM messages');
-    return formatToMessageCollection(rows);
+    const { rows } = await this.client.query('SELECT * FROM messages');
+    return formatToMessageCollection(
+      rows.map(
+        (row): Message => ({
+          messageID: row.message_id,
+          consumerID: row.consumer_id,
+          messageContent: row.message_content,
+          durable: row.durable,
+        }),
+      ),
+    );
   }
 
   async createQueue(queueDetails: CreateQueueDto): Promise<boolean> {
