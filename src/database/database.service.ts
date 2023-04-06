@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoStorage } from '../Storage/MongoStorage/MongoStorage';
+import { PostgreSQLStorage } from '../Storage/PostgreSQLStorage/PostgreSQLStorage';
 import { CreateConsumerDto } from '../consumer/dto/create-consumer.dto';
 import { InstaceConsumer } from '../consumer/dto/instance-consumer.dto';
 import { CreateQueueDto } from '../queue/dto/create-queue.dto';
@@ -38,8 +39,16 @@ export class DatabaseService {
   async loadStorage() {
     await ConfigModule.envVariablesLoaded;
     const storageType = process.env.STORAGE_TYPE || 'local';
-    this.storage =
-      storageType === 'mongodb' ? new MongoStorage() : new LocalStorage();
+    switch (storageType) {
+      case 'mongodb':
+        this.storage = new MongoStorage();
+        break;
+      case 'pg':
+        this.storage = new PostgreSQLStorage();
+        break;
+      default:
+        this.storage = new LocalStorage();
+    }
 
     await this.storage.initialize();
     const storedMessages = await this.storage.getMessages();
