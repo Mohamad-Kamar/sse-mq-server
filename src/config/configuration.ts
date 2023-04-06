@@ -8,4 +8,7 @@ export default () => ({
     username: process.env.MONGODB_USERNAME,
     password: parseInt(process.env.MONGODB_PASSWORD || '', 10) || 5432,
   },
+  postgres: {
+    connectionString: process.env.POSTGRESQL_CONNECTION_STRING,
+  },
 });
