@@ -6,7 +6,7 @@ import { InvalidQueueError } from '../structures/Errors/InvalidQueueError';
 import { QueueNotFoundError } from '../structures/Errors/QueueNotFoundError';
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
 import { DatabaseService } from '../database/database.service';
-import { InstanceConsumerCollection, InstanceMessage } from 'src/Types';
+import { InstanceConsumerCollection, InstanceMessage } from '../../src/Types';
 import { InstaceConsumer } from './dto/instance-consumer.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { AlreadyExistsError } from '../structures/Errors/AlreadyExistsError';
@@ -88,5 +88,10 @@ export class ConsumerService {
     const assocQueue = this.databaseService.getQueue(queueKey);
     if (assocQueue) assocQueue.deleteConsumer(consumerID);
     delete this.consumers[consumer.consumerID];
+  }
+
+  deleteMessage(instanceMessage: InstanceMessage) {
+    this.databaseService.deleteMessage(instanceMessage);
+    this.databaseService.removeMessage(instanceMessage);
   }
 }

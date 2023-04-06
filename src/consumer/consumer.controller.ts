@@ -17,6 +17,7 @@ import {
 import { ConnectToQueueDto } from '../queue/dto/connect-to-queue';
 import { ConsumerService } from './consumer.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
+import { InstanceMessage } from '../../src/Types';
 
 @Controller('consumer')
 export class ConsumerController {
@@ -50,5 +51,10 @@ export class ConsumerController {
   @Delete()
   deleteOne(@Query() query: CreateConsumerDto) {
     return this.consumerService.delete(query);
+  }
+
+  @Delete('message')
+  deleteMessage(@Body() instanceMessage: InstanceMessage) {
+    return this.consumerService.deleteMessage(instanceMessage);
   }
 }
