@@ -20,6 +20,7 @@ export class MongoStorage implements IStorage {
   consumers: Collection;
   messages: Collection;
   client: MongoClient;
+
   async initialize(): Promise<void> {
     await ConfigModule.envVariablesLoaded;
     const clusterName = process.env.MONGODB_USERNAME;
