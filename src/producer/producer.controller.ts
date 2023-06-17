@@ -7,7 +7,7 @@ export class ProducerController {
   constructor(private readonly producerService: ProducerService) {}
 
   @Post()
-  publish(@Body() messageBody: ProducerMessage) {
+  async publish(@Body() messageBody: ProducerMessage) {
     return this.producerService.publish(messageBody);
   }
 }

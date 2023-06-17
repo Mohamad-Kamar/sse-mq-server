@@ -17,7 +17,7 @@ export class QueueController {
   constructor(private readonly queueService: QueueService) {}
 
   @Post()
-  create(@Body() createQueueDto: CreateQueueDto) {
+  async create(@Body() createQueueDto: CreateQueueDto) {
     return this.queueService.create(createQueueDto);
   }
 

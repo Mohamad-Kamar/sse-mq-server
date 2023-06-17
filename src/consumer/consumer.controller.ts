@@ -29,7 +29,7 @@ export class ConsumerController {
   }
 
   @Post()
-  create(@Body() consumerDetails: CreateConsumerDto) {
+  async create(@Body() consumerDetails: CreateConsumerDto) {
     return this.consumerService.create(consumerDetails);
   }
 
